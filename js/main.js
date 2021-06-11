@@ -50,10 +50,10 @@ const offerPhotos = [
 const createObject = function (index) {
   const objectRoom = {
     author: {
-      avatar: 'img/avatars/user' + (index < 10 ? '0' : '') + (index + 1) + '.png'
+      avatar: 'img/avatars/user $(index < 10 ? '0' : '') $(index + 1) $.png'
     },
     offer : {
-      title : offerTitle[i],
+      title : offerTitle[index],
       address : getRandomNumberPoint(35.65000, 35.70000, 5) + ', ' + getRandomNumberPoint(139.70000 , 139.80000, 5),
       price : getRandomBetween(100, 1000000),
       type : offerType[getRandomBetween(0, offerType.length - 1)],
