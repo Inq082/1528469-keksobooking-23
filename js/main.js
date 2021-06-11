@@ -37,18 +37,18 @@ const offerTitle = [
   'Неуютное бунгало',
   'Апарт отель',
   'Хостел'];
-let offerType = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-let offerCheckIn = ['12:00', '13:00', '14:00'];
-let offerCheckOut = ['12:00', '13:00', '14:00'];
-let offerFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-let offerPhotos = [
+const offerType = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const offerCheckIn = ['12:00', '13:00', '14:00'];
+const offerCheckOut = ['12:00', '13:00', '14:00'];
+const offerFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const offerPhotos = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 // Генерируем объект
-let createObject = function(i) {
-  let objectRoom = {
+const createObject = function (i) {
+  const objectRoom = {
     author: {
       avatar: 'img/avatars/user' + (i < 10 ? '0' : '') + (i + 1) + '.png'
     },
