@@ -50,7 +50,7 @@ const offerPhotos = [
 const createObject = function (index) {
   const objectRoom = {
     author: {
-      avatar: 'img/avatars/user $(index < 10 ? '0' : '') $(index + 1) $.png'
+      avatar: `img/avatars/user ${index < 10 ? '0' : ''} ${index + 1} $.png`
     },
     offer : {
       title : offerTitle[index],
