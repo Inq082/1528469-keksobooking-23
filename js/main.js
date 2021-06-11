@@ -51,11 +51,11 @@ const offerPhotos = [
 const createObject = function (index) {
   const objectRoom = {
     author: {
-      avatar: `img/avatars/user ${index < 10 ? '0' : ''} ${index + 1} $.png`
+      avatar: `img/avatars/user ${index < 10 ? '0' : ''} ${index + 1} $.png`,
     },
     offer : {
       title : offerTitle[index],
-      address : `getRandomNumberPoint(35.65000, 35.70000, 5) $, $getRandomNumberPoint(139.70000 , 139.80000, 5)`,
+      address : `getRandomNumberPoint(35.65000, 35.70000, 5) $', ' $getRandomNumberPoint(139.70000 , 139.80000, 5)`,
       price : getRandomBetween(100, 1000000),
       type : offerType[getRandomBetween(0, offerType.length - 1)],
       rooms : getRandomBetween(1, 7),
@@ -66,13 +66,13 @@ const createObject = function (index) {
       features : getArrayRandomLength(offerFeatures, getRandomBetween(1, offerFeatures.length - 1)),
       description : '',
       // Случайная длина
-      photos : getArrayRandomLength(offerPhotos, offerPhotos.length)
+      photos : getArrayRandomLength(offerPhotos, offerPhotos.length),
     },
 
     location: {
       lat : getRandomNumberPoint(35.65000, 35.70000, 5),
-      lng : getRandomNumberPoint(139.70000 , 139.80000, 5)
-    }
+      lng : getRandomNumberPoint(139.70000 , 139.80000, 5),
+    },
   };
   return objectRoom;
 };
