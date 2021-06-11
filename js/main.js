@@ -53,25 +53,25 @@ let createObject = function(i) {
     author: {
       avatar: 'img/avatars/user' + (i < 10 ? '0' : '') + (i + 1) + '.png'
     },
-    'offer': {
-      'title': offerTitle[i],
-      'address': getRandomNumberPoint(35.65000, 35.70000, 5) + ', ' + getRandomNumberPoint(139.70000 , 139.80000, 5),
-      'price': getRandomBetween(100, 1000000),
-      'type': offerType[getRandomBetween(0, offerType.length - 1)],
-      'rooms': getRandomBetween(1, 7),
-      'guests': getRandomBetween(1, 20),
-      'checkin': offerCheckIn[getRandomBetween(0, offerCheckIn.length - 1)],
-      'checkout': offerCheckOut[getRandomBetween(0, offerCheckOut.length - 1)],
+    offer : {
+      title : offerTitle[i],
+      address : getRandomNumberPoint(35.65000, 35.70000, 5) + ', ' + getRandomNumberPoint(139.70000 , 139.80000, 5),
+      price : getRandomBetween(100, 1000000),
+      type : offerType[getRandomBetween(0, offerType.length - 1)],
+      rooms : getRandomBetween(1, 7),
+      guests : getRandomBetween(1, 20),
+      checkin : offerCheckIn[getRandomBetween(0, offerCheckIn.length - 1)],
+      checkout : offerCheckOut[getRandomBetween(0, offerCheckOut.length - 1)],
       // Случайное кол-во, случаные значения, не должны повторяться
-      'features': getArrayRandomLength(offerFeatures, getRandomBetween(1, offerFeatures.length - 1)),
-      'description': '',
+      features : getArrayRandomLength(offerFeatures, getRandomBetween(1, offerFeatures.length - 1)),
+      description : '',
       // Случайная длина
-      'photos': getArrayRandomLength(offerPhotos, offerPhotos.length)
+      photos : getArrayRandomLength(offerPhotos, offerPhotos.length)
     },
 
-    'location': {
-      'x': getRandomNumberPoint(35.65000, 35.70000, 5),
-      'y': getRandomNumberPoint(139.70000 , 139.80000, 5),
+    location': {
+      x : getRandomNumberPoint(35.65000, 35.70000, 5),
+      y : getRandomNumberPoint(139.70000 , 139.80000, 5),
     }
   };
 
