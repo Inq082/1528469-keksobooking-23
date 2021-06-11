@@ -36,7 +36,8 @@ const offerTitle = [
   'Уютное бунгало',
   'Неуютное бунгало',
   'Апарт отель',
-  'Хостел'];
+  'Хостел',
+];
 const offerType = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const offerCheckIn = ['12:00', '13:00', '14:00'];
 const offerCheckOut = ['12:00', '13:00', '14:00'];
@@ -44,7 +45,7 @@ const offerFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'c
 const offerPhotos = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 // Генерируем объект
 const createObject = function (index) {
