@@ -78,8 +78,8 @@ const createObject = function(index) {
 };
 function createListOffers(quantityElements) {
   const listElement = [];
-  for (let ii = 0; ii < quantityElements; ii++) {
-    listElement[ii] = createObject(ii);
+  for (let index = 0; index < quantityElements; index++) {
+    listElement[index] = createObject(index);
   }
   return listElement;
 }
