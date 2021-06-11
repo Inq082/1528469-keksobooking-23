@@ -10,7 +10,7 @@ function getRandomNumberPoint(min, max, point){
 }
 getRandomNumberPoint(2, 10, 4);//temporary
 //Генерируем рандомный массив заданной длины
-let getArrayRandomLength = function (array, length) {
+function getArrayRandomLength(array, length) {
   let shufleArray = array.slice();
   let temporaryValue;
   let randomIndex;
@@ -48,7 +48,7 @@ let offerPhotos = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 // Генерируем объект
-function createObject(i) {
+let createObject = function(i) {
   let objectRoom = {
     author: {
       avatar: 'img/avatars/user' + (i < 10 ? '0' : '') + (i + 1) + '.png'
