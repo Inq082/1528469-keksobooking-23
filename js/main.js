@@ -11,7 +11,7 @@ function getRandomNumberPoint(min, max, point){
 getRandomNumberPoint(2, 10, 4);//temporary
 //Генерируем рандомный массив заданной длины
 function getArrayRandomLength(array, length) {
-  let shufleArray = array.slice();
+  const shufleArray = array.slice();
   let temporaryValue;
   let randomIndex;
 
