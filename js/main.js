@@ -69,10 +69,9 @@ const createObject = function (i) {
     },
 
     location: {
-      x : getRandomNumberPoint(35.65000, 35.70000, 5),
-      y : getRandomNumberPoint(139.70000 , 139.80000, 5),
+      lat : getRandomNumberPoint(35.65000, 35.70000, 5),
+      lng : getRandomNumberPoint(139.70000 , 139.80000, 5)
     }
   };
-
   return objectRoom;
-}
+};
