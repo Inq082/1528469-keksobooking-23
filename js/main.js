@@ -51,11 +51,11 @@ function getArrayRandomLength(array, length) {
 const createObject = function(index) {
   const objectRoom = {
     author: {
-      avatar: `img/avatars/user ${index < 10 ? '0' : ''} ${index + 1} $.png`,
+      avatar: `img/avatars/user${index < 9 ? '0' : ''}${index + 1}.png`,
     },
     offer : {
       title : OFFER_TITLE[index],
-      address : `${getRandomNumberPoint(35.65000, 35.70000, 5)} , ${getRandomNumberPoint(139.70000 , 139.80000, 5)}`,
+      //address = `objectRoom.location.lat , objectRoom.location.lng`,//
       price : getRandomBetween(100, 1000000),
       type : OFFER_TYPE[getRandomBetween(0, OFFER_TYPE.length - 1)],
       rooms : getRandomBetween(1, 7),
@@ -74,6 +74,7 @@ const createObject = function(index) {
       lng : getRandomNumberPoint(139.70000 , 139.80000, 5),
     },
   };
+  objectRoom.offer.address = objectRoom.location.lat + ', ' + objectRoom.location.lng;
   return objectRoom;
 };
 function createListOffers(quantityElements) {
@@ -84,4 +85,6 @@ function createListOffers(quantityElements) {
   return listElement;
 }
 const listOffers = createListOffers(QUANTITY_OFFERS);
+
+window.console.log(listOffers);
 
