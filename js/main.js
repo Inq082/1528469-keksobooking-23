@@ -48,7 +48,7 @@ let offerPhotos = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 // Генерируем объект
-let createObject = function(i) {
+function createObject(i) {
   let objectRoom = {
     author: {
       avatar: 'img/avatars/user' + (i < 10 ? '0' : '') + (i + 1) + '.png'
