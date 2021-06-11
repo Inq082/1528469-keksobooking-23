@@ -1,6 +1,5 @@
-
-const QUANTITYOFFERS = 10;
-const OFFERTITLE = [
+const QUANTITY_OFFERS = 10;
+const OFFER_TITLE = [
   'Большой дворец',
   'Небольшой дворец',
   'Огромная квартира',
@@ -12,11 +11,11 @@ const OFFERTITLE = [
   'Апарт отель',
   'Хостел',
 ];
-const OFFERTYPE = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-const OFFERCHECKIN = ['12:00', '13:00', '14:00'];
-const OFFERCHECKOUT = ['12:00', '13:00', '14:00'];
-const OFFERFEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const OFFERPHOTOS = [
+const OFFER_TYPE = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const OFFER_CHECKIN = ['12:00', '13:00', '14:00'];
+const OFFER_CHECKOUT = ['12:00', '13:00', '14:00'];
+const OFFER_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const OFFER_PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
@@ -55,19 +54,19 @@ const createObject = function(index) {
       avatar: `img/avatars/user ${index < 10 ? '0' : ''} ${index + 1} $.png`,
     },
     offer : {
-      title : OFFERTITLE[index],
+      title : OFFER_TITLE[index],
       address : `${getRandomNumberPoint(35.65000, 35.70000, 5)} , ${getRandomNumberPoint(139.70000 , 139.80000, 5)}`,
       price : getRandomBetween(100, 1000000),
-      type : OFFERTYPE[getRandomBetween(0, OFFERTYPE.length - 1)],
+      type : OFFER_TYPE[getRandomBetween(0, OFFER_TYPE.length - 1)],
       rooms : getRandomBetween(1, 7),
       guests : getRandomBetween(1, 20),
-      checkin : OFFERCHECKIN[getRandomBetween(0, OFFERCHECKIN.length - 1)],
-      checkout : OFFERCHECKOUT[getRandomBetween(0, OFFERCHECKOUT.length - 1)],
+      checkin : OFFER_CHECKIN[getRandomBetween(0, OFFER_CHECKIN.length - 1)],
+      checkout : OFFER_CHECKOUT[getRandomBetween(0, OFFER_CHECKOUT.length - 1)],
       // Случайное кол-во, случаные значения, не должны повторяться
-      features : getArrayRandomLength(OFFERFEATURES, getRandomBetween(1, OFFERFEATURES.length - 1)),
+      features : getArrayRandomLength(OFFER_FEATURES, getRandomBetween(1, OFFER_FEATURES.length - 1)),
       description : '',
       // Случайная длина
-      photos : getArrayRandomLength(OFFERPHOTOS, OFFERPHOTOS.length),
+      photos : getArrayRandomLength(OFFER_PHOTOS, OFFER_PHOTOS.length),
     },
 
     location: {
@@ -84,5 +83,5 @@ function createListOffers(quantityElements) {
   }
   return listElement;
 }
-const listOffers = createListOffers(QUANTITYOFFERS);
+const listOffers = createListOffers(QUANTITY_OFFERS);
 
