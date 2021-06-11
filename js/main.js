@@ -26,7 +26,7 @@ function getArrayRandomLength(array, length) {
   return shufleArray;
 }
 
-let offerTitle = [
+const offerTitle = [
   'Большой дворец',
   'Небольшой дворец',
   'Огромная квартира',
@@ -36,8 +36,7 @@ let offerTitle = [
   'Уютное бунгало',
   'Неуютное бунгало',
   'Апарт отель',
-  'Хостел'
-];
+  'Хостел'];
 let offerType = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 let offerCheckIn = ['12:00', '13:00', '14:00'];
 let offerCheckOut = ['12:00', '13:00', '14:00'];
