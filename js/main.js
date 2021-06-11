@@ -54,7 +54,7 @@ const createObject = function (index) {
     },
     offer : {
       title : offerTitle[index],
-      address : getRandomNumberPoint(35.65000, 35.70000, 5) + ', ' + getRandomNumberPoint(139.70000 , 139.80000, 5),
+      address : `getRandomNumberPoint(35.65000, 35.70000, 5) $, $getRandomNumberPoint(139.70000 , 139.80000, 5)`,
       price : getRandomBetween(100, 1000000),
       type : offerType[getRandomBetween(0, offerType.length - 1)],
       rooms : getRandomBetween(1, 7),
