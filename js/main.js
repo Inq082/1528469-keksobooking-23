@@ -55,7 +55,6 @@ const createObject = function(index) {
     },
     offer : {
       title : OFFER_TITLE[index],
-      //address = `objectRoom.location.lat , objectRoom.location.lng`,//
       price : getRandomBetween(100, 1000000),
       type : OFFER_TYPE[getRandomBetween(0, OFFER_TYPE.length - 1)],
       rooms : getRandomBetween(1, 7),
@@ -74,13 +73,13 @@ const createObject = function(index) {
       lng : getRandomNumberPoint(139.70000 , 139.80000, 5),
     },
   };
-  objectRoom.offer.address = objectRoom.location.lat + ', ' + objectRoom.location.lng;
+  objectRoom.offer.address = 'objectRoom.location.lat + ,  + objectRoom.location.lng';
   return objectRoom;
 };
 function createListOffers(quantityElements) {
   const listElement = [];
-  for (let i = 0; i < quantityElements; i++) {
-    listElement[i] = createObject(i);
+  for (let ii = 0; ii < quantityElements; ii++) {
+    listElement[ii] = createObject(ii);
   }
   return listElement;
 }
