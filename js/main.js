@@ -47,10 +47,10 @@ const offerPhotos = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 // Генерируем объект
-const createObject = function (i) {
+const createObject = function (index) {
   const objectRoom = {
     author: {
-      avatar: 'img/avatars/user' + (i < 10 ? '0' : '') + (i + 1) + '.png'
+      avatar: 'img/avatars/user' + (index < 10 ? '0' : '') + (index + 1) + '.png'
     },
     offer : {
       title : offerTitle[i],
