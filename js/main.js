@@ -69,7 +69,7 @@ function createObject(i) {
       photos : getArrayRandomLength(offerPhotos, offerPhotos.length)
     },
 
-    location': {
+    location: {
       x : getRandomNumberPoint(35.65000, 35.70000, 5),
       y : getRandomNumberPoint(139.70000 , 139.80000, 5),
     }
