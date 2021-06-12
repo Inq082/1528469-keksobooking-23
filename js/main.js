@@ -48,6 +48,8 @@ function getArrayRandomLength(array, length) {
   return shufleArray;
 }
 // Генерируем объект
+const lat = getRandomNumberPoint(35.65000, 35.70000, 5);
+const lng = getRandomNumberPoint(139.70000 , 139.80000, 5);
 const createObject = function(index) {
   const objectRoom = {
     author: {
@@ -55,6 +57,7 @@ const createObject = function(index) {
     },
     offer : {
       title : OFFER_TITLE[index],
+      address: `${lat},${lng}`,
       price : getRandomBetween(100, 1000000),
       type : OFFER_TYPE[getRandomBetween(0, OFFER_TYPE.length - 1)],
       rooms : getRandomBetween(1, 7),
@@ -69,11 +72,10 @@ const createObject = function(index) {
     },
 
     location: {
-      lat : getRandomNumberPoint(35.65000, 35.70000, 5),
-      lng : getRandomNumberPoint(139.70000 , 139.80000, 5),
+      latitude :lat,
+      longitude : lng,
     },
   };
-  objectRoom.offer.address = 'objectRoom.location.lat + ,  + objectRoom.location.lng';
   return objectRoom;
 };
 function createListOffers(quantityElements) {
