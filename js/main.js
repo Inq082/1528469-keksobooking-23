@@ -48,9 +48,9 @@ function getArrayRandomLength(array, length) {
   return shufleArray;
 }
 // Генерируем объект
-const lat = getRandomNumberPoint(35.65000, 35.70000, 5);
-const lng = getRandomNumberPoint(139.70000 , 139.80000, 5);
 const createObject = function(index) {
+  const lat = getRandomNumberPoint(35.65000, 35.70000, 5);
+  const lng = getRandomNumberPoint(139.70000 , 139.80000, 5);
   const objectRoom = {
     author: {
       avatar: `img/avatars/user${index < 9 ? '0' : ''}${index + 1}.png`,
