@@ -22,3 +22,20 @@ export function getArrayRandomLength(array, length) {
   shufleArray.length = length;
   return shufleArray;
 }
+//генерируем окончания
+export const endParam = function (count, variants) {
+  const limitOfHundred = count % 100;
+  const limitOfTen = count % 10;
+
+  if (limitOfHundred > 10 && limitOfHundred < 20) {
+    return variants[2];
+  }
+  if (limitOfTen > 1 && limitOfTen < 5) {
+    return variants[1];
+  }
+  if (limitOfTen === 1) {
+    return variants[0];
+  }
+
+  return variants[2];
+};
