@@ -4,7 +4,7 @@ import {endParam} from './utils.js';
 //скрываем при отсутствии данных
 const setCardElementText = (cardElement, className, text) => {
   const cardRow = cardElement.querySelector(className);
-  if (text == null || text.length == 0) {
+  if (!text || !text.length) {
     cardRow.classList.add('hidden');
   } else {
     cardRow.textContent = text;
@@ -46,16 +46,20 @@ export const getCardTemplate = (adsItem) => {
   setCardElementText(cardElement, '.popup__text--time', `Заезд после ${adsItem.offer.checkin} , выезд до ${adsItem.offer.checkout}`);
   //setCardElementText(cardElement, '.popup__features', adsItem.offer.features.join(', '));
   // отрисовка features
-  const futureContainer = cardElement.querySelector('.popup__features');
-  if (adsItem.offer.features.length > 0) {
-    futureContainer.innerHTML = '';
-    for (const feature of adsItem.offer.features) {
+  if ((adsItem.offer.features).length > 0) {
+    cardElement.querySelector('.popup__features').textContent = ' ';
+    const futureContainer = cardElement.querySelector('.popup__features');
+    adsItem.offer.features.forEach((feature) => {
       const li = document.createElement('li');
       li.classList.add('popup__feature');
-      li.classList.add(`popup__feature--${feature}`);
-      futureContainer.appendChild(li);
-    }
+      const featuresClass = `popup__feature--${feature}`;
+      li.classList.add(featuresClass);
+      futureContainer.append(li);
+    });
+  } else {
+    cardElement.querySelector('.popup__features').classList.add('hidden');
   }
+
   setCardElementText(cardElement, '.popup__description', adsItem.offer.description);
 
   const photosContainer = cardElement.querySelector('.popup__photos');
