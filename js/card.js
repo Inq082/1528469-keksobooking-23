@@ -27,6 +27,22 @@ const setPhotosElement = (photoadsList, container) => {
     container.classList.add('hidden');
   }
 };
+// отрисовка features
+const genFeatures = function (newFeature) {
+  const futureContainer = document.querySelector('.popup__features');
+  futureContainer.innerHTML = '';
+
+  if (newFeature === 0) {
+    futureContainer.classList.add('hidden');
+  } else {
+    newFeature.forEach ((feature) => {
+      const li = document.createElement('li');
+      li.classList.add(`.popup__feature, .popup__feature--${feature}`);
+      futureContainer.appendChild(li);
+    });
+    return futureContainer;
+  }
+};
 
 //создаем DOM объект
 export const getCardTemplate = (adsItem) => {
@@ -45,21 +61,18 @@ export const getCardTemplate = (adsItem) => {
   setCardElementText(cardElement, '.popup__text--capacity', `${adsItem.offer.rooms} ${rooms} для ${adsItem.offer.guests} ${guests}`);
   setCardElementText(cardElement, '.popup__text--time', `Заезд после ${adsItem.offer.checkin} , выезд до ${adsItem.offer.checkout}`);
   //setCardElementText(cardElement, '.popup__features', adsItem.offer.features.join(', '));
-  // отрисовка features
-  if ((adsItem.offer.features).length > 0) {
-    cardElement.querySelector('.popup__features').textContent = ' ';
-    const futureContainer = cardElement.querySelector('.popup__features');
-    adsItem.offer.features.forEach((feature) => {
+  cardElement.querySelector('.popup__features').replaceWith(genFeatures(adsItem));
+
+  /*const futureContainer = cardElement.querySelector('.popup__features');
+  if (adsItem.offer.features.length > 0) {
+    futureContainer.innerHTML = '';
+    for (const feature of adsItem.offer.features) {
       const li = document.createElement('li');
       li.classList.add('popup__feature');
-      const featuresClass = `popup__feature--${feature}`;
-      li.classList.add(featuresClass);
-      futureContainer.append(li);
-    });
-  } else {
-    cardElement.querySelector('.popup__features').classList.add('hidden');
-  }
-
+      li.classList.add(`popup__feature--${feature}`);
+      futureContainer.appendChild(li);
+    }
+  }*/
   setCardElementText(cardElement, '.popup__description', adsItem.offer.description);
 
   const photosContainer = cardElement.querySelector('.popup__photos');
@@ -70,4 +83,3 @@ export const getCardTemplate = (adsItem) => {
 
   return cardElement;
 };
-
