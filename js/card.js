@@ -27,6 +27,19 @@ const setPhotosElement = (photoadsList, container) => {
     container.classList.add('hidden');
   }
 };
+//features
+const getFeatures = function (firstAdObject) {
+  const listFragment = document.createDocumentFragment();
+  const newList = document.createElement('ul');
+  newList.className = 'popup__features';
+  for (let i = 0; i < firstAdObject.offer.features.length; i++) {
+    const newElementList = document.createElement('li');
+    newElementList.className = `popup__feature popup__feature--${firstAdObject.offer.features[i]}`;
+    listFragment.appendChild(newElementList);
+  }
+  newList.appendChild(listFragment);
+  return newList;
+};
 //создаем DOM объект
 export const getCardTemplate = (adsItem) => {
   const cardTemplate = document.querySelector('#card')
@@ -44,33 +57,8 @@ export const getCardTemplate = (adsItem) => {
   setCardElementText(cardElement, '.popup__text--capacity', `${adsItem.offer.rooms} ${rooms} для ${adsItem.offer.guests} ${guests}`);
   setCardElementText(cardElement, '.popup__text--time', `Заезд после ${adsItem.offer.checkin} , выезд до ${adsItem.offer.checkout}`);
   //setCardElementText(cardElement, '.popup__features', adsItem.offer.features.join(', '));
-  // отрисовка features
-  const genFeatures = function (newFeature) {
-    const futureContainer = cardElement.querySelector('.popup__features');
-    const feature = adsItem.offer.features;
-    if (newFeature === 0) {
-      futureContainer.classList.add('hidden');
-    } else {
-      futureContainer.innerHTML = '';
-      if (adsItem.offer.features.length > 0) {
-        const li = document.createElement('li');
-        li.classList.add('popup__feature');
-        li.classList.add(`popup__feature--${feature}`);
-        futureContainer.appendChild(li);
-      }
-    }
-    return futureContainer;
-  };
-  /*const futureContainer = cardElement.querySelector('.popup__features');
-  if (adsItem.offer.features.length > 0) {
-    futureContainer.innerHTML = '';
-    for (const feature of adsItem.offer.features) {
-      const li = document.createElement('li');
-      li.classList.add('popup__feature');
-      li.classList.add(`popup__feature--${feature}`);
-      futureContainer.appendChild(li);
-    }
-  }*/
+  cardElement.querySelector('.popup__features').replaceWith(getFeatures(adsItem));
+
   setCardElementText(cardElement, '.popup__description', adsItem.offer.description);
 
   const photosContainer = cardElement.querySelector('.popup__photos');
