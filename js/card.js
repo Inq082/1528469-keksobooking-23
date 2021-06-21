@@ -10,36 +10,31 @@ const setCardElementText = (cardElement, className, text) => {
     cardRow.textContent = text;
   }
 };
-const setPhotosElement = (photoadsList, container) => {
-  if (photoadsList.length > 0) {
-    const photoTemplate = document.querySelector('#card')
-      .content
-      .querySelector('.popup__photo');
+//photos
+const getImages = (container, imageSources) => {
+  container.innerHTML = '';
+  imageSources.forEach((imageSource) => {
+    const image = document.createElement('img');
+    image.src = imageSource;
+    image.classList.add('popup__photo');
+    image.width = '45';
+    image.height = '40';
+    image.alt = 'Фотография жилья';
+    container.appendChild(image);
+  });
+};
 
-    photoadsList.forEach((photoUrl) => {
-      if (photoUrl.length > 0) {
-        const photoElement = photoTemplate.cloneNode(true);
-        photoElement.src = photoUrl;
-        container.appendChild(photoElement);
-      }
-    });
-  } else {
-    container.classList.add('hidden');
-  }
-};
 //features
-const getFeatures = function (firstAdObject) {
-  const listFragment = document.createDocumentFragment();
-  const newList = document.createElement('ul');
-  newList.className = 'popup__features';
-  for (let i = 0; i < firstAdObject.offer.features.length; i++) {
-    const newElementList = document.createElement('li');
-    newElementList.className = `popup__feature popup__feature--${firstAdObject.offer.features[i]}`;
-    listFragment.appendChild(newElementList);
-  }
-  newList.appendChild(listFragment);
-  return newList;
+const getFeatures = (container, listElement) => {
+  container.innerHTML = '';
+  listElement.forEach((feature) => {
+    const listItem = document.createElement('li');
+    listItem.classList.add('popup__feature', `popup__feature--${feature}`);
+    listItem.textContent = feature;
+    container.appendChild(listItem);
+  });
 };
+
 //создаем DOM объект
 export const getCardTemplate = (adsItem) => {
   const cardTemplate = document.querySelector('#card')
@@ -56,14 +51,9 @@ export const getCardTemplate = (adsItem) => {
   setCardElementText(cardElement, '.popup__type', OFFER_TYPE[adsItem.offer.type]);
   setCardElementText(cardElement, '.popup__text--capacity', `${adsItem.offer.rooms} ${rooms} для ${adsItem.offer.guests} ${guests}`);
   setCardElementText(cardElement, '.popup__text--time', `Заезд после ${adsItem.offer.checkin} , выезд до ${adsItem.offer.checkout}`);
-  //setCardElementText(cardElement, '.popup__features', adsItem.offer.features.join(', '));
-  cardElement.querySelector('.popup__features').replaceWith(getFeatures(adsItem));
-
+  getFeatures(cardElement.querySelector('.popup__features'), adsItem.offer.features);
   setCardElementText(cardElement, '.popup__description', adsItem.offer.description);
-
-  const photosContainer = cardElement.querySelector('.popup__photos');
-
-  setPhotosElement(adsItem.offer.photos, photosContainer);
+  getImages(cardElement.querySelector('.popup__photos'), adsItem.offer.photos);
 
   cardElement.querySelector('.popup__avatar').src = adsItem.author.avatar;
 
