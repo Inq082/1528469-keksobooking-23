@@ -30,6 +30,7 @@ export const OFFER_TYPE = {
 };
 export const OFFER_ROOM = ['комната', 'комнаты', 'комнат'];
 export const OFFER_GUEST = ['гостя', 'гостей', 'гостей'];
+export const TITLE_LENGTH = ['символ', 'символа', 'символов'];
 // Генерируем объект
 const createObject = function(index) {
   const lat = getRandomNumberPoint(35.65000, 35.70000, 5);
