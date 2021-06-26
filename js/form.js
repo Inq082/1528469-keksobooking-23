@@ -8,18 +8,16 @@ const offerTime = offerForm.querySelector('.ad-form__element--time');
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-let MIN_PRICE = 1000;
+//let MIN_PRICE = 1000;
 const DEFAULT_MAX_PRICE = 1000000;
 
-/*const DEFAULT_MIN_PRICE = {
+const DEFAULT_MIN_PRICE = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
   house: 5000,
   palace: 10000,
 };
-
- */
 
 //Валидация заголовка
 const checkTitleValidity = () => {
@@ -39,18 +37,18 @@ const checkTitleValidity = () => {
 // Валидация количества гостей и комнат
 const checkRoomNumberCapacityValidity = () => {
   const numberOfGuests = {
-    1: ['1'],
-    2: ['1', '2'],
-    3: ['1', '2', '3'],
-    100: ['0'],
+    '1': [1],
+    '2': [1, 2],
+    '3': [1, 2, 3],
+    '100': [0],
   };
 
-  capacitySelect.setCustomValidity(numberOfGuests[selectRooms.value].includes(Number(capacitySelect.value)) ? '' : 'текст ошибки');
+  capacitySelect.setCustomValidity(numberOfGuests[selectRooms.value].includes(Number(capacitySelect.value)) ? '' : 'выберите валидное значение');
   capacitySelect.reportValidity();
 
 };
 
-const checkTypeValidity = () => {
+/*const checkTypeValidity = () => {
   switch (offerType.value) {
     case 'bungalow':
       MIN_PRICE = 0;
@@ -73,21 +71,23 @@ const checkTypeValidity = () => {
 
   offerPrice.placeholder = MIN_PRICE;
 };
+
+ */
 // Валидация цены
 
 const checkPriceValidity = () => {
   if (offerPrice.value > DEFAULT_MAX_PRICE) {
     offerPrice.setCustomValidity(`Цена не должна превышать ${DEFAULT_MAX_PRICE} руб.`);
 
-  } else if (offerPrice.value < MIN_PRICE) {
-    offerPrice.setCustomValidity(`Цена должна быть не менее ${MIN_PRICE} руб.`);
+  } else if (offerPrice.value < DEFAULT_MIN_PRICE[offerType.value]) {
+    offerPrice.setCustomValidity(`Цена должна быть не менее ${DEFAULT_MIN_PRICE[offerType.value]} руб.`);
 
   } else {
     offerPrice.setCustomValidity('');
   }
-
+  offerPrice.placeholder = DEFAULT_MIN_PRICE[offerType.value];
   offerPrice.reportValidity();
-  checkTypeValidity();
+  //checkTypeValidity();
 };
 
 // Синхронизация полей времени заезда и выезда
@@ -104,7 +104,7 @@ const checkTimeValidity = (evt) => {
 export const checkValidity = () => {
   offerPrice.addEventListener('input', checkPriceValidity);
   offerTitleInput.addEventListener('input', checkTitleValidity);
-  selectRooms.addEventListener('change', checkRoomNumberCapacityValidity);
+  //selectRooms.addEventListener('change', checkRoomNumberCapacityValidity);
   offerType.addEventListener('change', checkPriceValidity);
   offerTime.addEventListener('change', checkTimeValidity);
   capacitySelect.addEventListener('change', checkRoomNumberCapacityValidity);
