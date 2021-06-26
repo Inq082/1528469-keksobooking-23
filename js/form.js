@@ -6,13 +6,15 @@ const offerTitleInput = offerForm.querySelector('#title');
 const offerType = offerForm.querySelector('#type');
 const offerPrice = offerForm.querySelector('#price');
 const capacitySelect = offerForm.querySelector('#capacity');
-const capacityOptions = capacitySelect.querySelectorAll('option');
+//const capacityOptions = capacitySelect.querySelectorAll('option');
 const selectRooms = offerForm.querySelector('#room_number');
-const checkinTime = offerForm.querySelector('#timein');
-const checkoutTime = offerForm.querySelector('#timeout');
+//const checkinTime = offerForm.querySelector('#timein');
+//const checkoutTime = offerForm.querySelector('#timeout');
+const offerTime = offerForm.querySelector('.ad-form__element--time');
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
+let MIN_PRICE = 1000;
 const DEFAULT_MAX_PRICE = 1000000;
 
 const DEFAULT_MIN_PRICE = {
@@ -22,15 +24,18 @@ const DEFAULT_MIN_PRICE = {
   house: 5000,
   palace: 10000,
 };
-const numberOfGuests = {
+
+/*const numberOfGuests = {
   1: ['1'],
   2: ['1', '2'],
   3: ['1', '2', '3'],
   100: ['0'],
 };
 
+ */
+
 //Валидация заголовка
-offerTitleInput.addEventListener('input', () => {
+const checkTitleValidity = () => {
   const valueLength = offerTitleInput.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
@@ -42,7 +47,7 @@ offerTitleInput.addEventListener('input', () => {
   }
 
   offerTitleInput.reportValidity();
-});
+};
 
 // Валидация цены
 offerType.addEventListener('change', () => {
@@ -50,7 +55,7 @@ offerType.addEventListener('change', () => {
   offerPrice.min = DEFAULT_MIN_PRICE[offerType.value];
 });
 
-offerPrice.addEventListener('input', () => {
+const checkPriceValidity = () => {
   if (offerPrice.value > DEFAULT_MAX_PRICE) {
     offerPrice.setCustomValidity(`Цена не должна превышать ${DEFAULT_MAX_PRICE} руб.`);
   } else if (offerPrice.value < DEFAULT_MIN_PRICE[offerType.value]) {
@@ -60,34 +65,68 @@ offerPrice.addEventListener('input', () => {
   }
 
   offerPrice.reportValidity();
-});
+};
 
 // Валидация количества гостей и комнат
-const validateRooms = () => {
-  const roomValue = selectRooms.value;
+const checkRoomNumberCapacityValidity = () => {
+  const numberOfGuests = {
+    1: [1],
+    2: [1, 2],
+    3: [1, 2, 3],
+    100: [0],
+  };
 
-  capacityOptions.forEach((option) => {
-    const isDisabled = (numberOfGuests[roomValue].indexOf(option.value) === -1);
+  for (const option of capacitySelect.children) {
+    const isIncludes = numberOfGuests[+selectRooms.value].includes(+option.value);
+    option.disabled = !isIncludes;
 
-    option.selected = numberOfGuests[roomValue][0] === option.value;
-    option.disabled = isDisabled;
-    option.hidden = isDisabled;
-  });
+    if (option.disabled === true) {
+      option.removeAttribute('selected');
+    }
+
+    if (option.disabled === false && (+option.value === 1 || +option.value === 0)) {
+      option.setAttribute('selected', '');
+    }
+  }
 };
-const onRoomNumberChange = () => {
-  validateRooms();
-} ;
+const checkTypeValidity = () => {
+  switch (offerType.value) {
+    case 'bungalow':
+      MIN_PRICE = 0;
+      break;
+    case 'flat':
+      MIN_PRICE = 1000;
+      break;
+    case 'hotel':
+      MIN_PRICE = 3000;
+      break;
+    case 'house':
+      MIN_PRICE = 5000;
+      break;
+    case 'palace':
+      MIN_PRICE = 10000;
+      break;
+    default:
+      MIN_PRICE = 1000;
+  }
+  offerPrice.placeholder = MIN_PRICE;
+};
 
 // Синхронизация полей времени заезда и выезда
-checkinTime.addEventListener('change', () => {
-  checkoutTime.value = checkinTime.value;
-});
+const checkTimeValidity = (evt) => {
+  const timeIn = offerTime.querySelector('#timein');
+  const timeOut = offerTime.querySelector('#timeout');
+  if (evt.target === timeIn) {
+    timeOut.value = evt.target.value;
+  } else if (evt.target === timeOut) {
+    timeIn.value = evt.target.value;
+  }
+};
 
-checkoutTime.addEventListener('change', () => {
-  checkinTime.value = checkoutTime.value;
-});
-
-validateRooms();
-
-selectRooms.addEventListener('change', onRoomNumberChange);
-
+export const checkValidity = () => {
+  offerPrice.addEventListener('input', checkPriceValidity);
+  offerTitleInput.addEventListener('input', checkTitleValidity);
+  selectRooms.addEventListener('change', checkRoomNumberCapacityValidity);
+  offerType.addEventListener('change', checkTypeValidity);
+  offerTime.addEventListener('change', checkTimeValidity);
+};
