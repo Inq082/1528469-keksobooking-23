@@ -36,44 +36,18 @@ const checkTitleValidity = () => {
   offerTitleInput.reportValidity();
 };
 
-// Валидация цены
-
-const checkPriceValidity = () => {
-  if (offerPrice.value > DEFAULT_MAX_PRICE) {
-    offerPrice.setCustomValidity(`Цена не должна превышать ${DEFAULT_MAX_PRICE} руб.`);
-
-  } else if (offerPrice.value < MIN_PRICE) {
-    offerPrice.setCustomValidity(`Цена должна быть не менее ${MIN_PRICE} руб.`);
-
-  } else {
-    offerPrice.setCustomValidity('');
-  }
-
-  offerPrice.reportValidity();
-
-};
-
 // Валидация количества гостей и комнат
 const checkRoomNumberCapacityValidity = () => {
   const numberOfGuests = {
-    1: [1],
-    2: [1, 2],
-    3: [1, 2, 3],
-    100: [0],
+    1: ['1'],
+    2: ['1', '2'],
+    3: ['1', '2', '3'],
+    100: ['0'],
   };
 
-  for (const option of capacitySelect.children) {
-    const isIncludes = numberOfGuests[+selectRooms.value].includes(+option.value);
-    option.disabled = !isIncludes;
+  capacitySelect.setCustomValidity(numberOfGuests[selectRooms.value].includes(Number(capacitySelect.value)) ? '' : 'текст ошибки');
+  capacitySelect.reportValidity();
 
-    if (option.disabled === true) {
-      option.removeAttribute('selected');
-    }
-
-    if (option.disabled === false && (+option.value === 1 || +option.value === 0)) {
-      option.setAttribute('selected', '');
-    }
-  }
 };
 
 const checkTypeValidity = () => {
@@ -98,19 +72,22 @@ const checkTypeValidity = () => {
   }
 
   offerPrice.placeholder = MIN_PRICE;
-  const input = offerPrice;
+};
+// Валидация цены
 
-  input.onfocus = function() {
-    if(input.value !== MIN_PRICE) {
-      input.value = '';
-    }
-  };
+const checkPriceValidity = () => {
+  if (offerPrice.value > DEFAULT_MAX_PRICE) {
+    offerPrice.setCustomValidity(`Цена не должна превышать ${DEFAULT_MAX_PRICE} руб.`);
 
-  input.onblur = function() {
-    if(input.value !== '') {
-      input.value = MIN_PRICE;
-    }
-  };
+  } else if (offerPrice.value < MIN_PRICE) {
+    offerPrice.setCustomValidity(`Цена должна быть не менее ${MIN_PRICE} руб.`);
+
+  } else {
+    offerPrice.setCustomValidity('');
+  }
+
+  offerPrice.reportValidity();
+  checkTypeValidity();
 };
 
 // Синхронизация полей времени заезда и выезда
@@ -128,6 +105,7 @@ export const checkValidity = () => {
   offerPrice.addEventListener('input', checkPriceValidity);
   offerTitleInput.addEventListener('input', checkTitleValidity);
   selectRooms.addEventListener('change', checkRoomNumberCapacityValidity);
-  offerType.addEventListener('change', checkTypeValidity);
+  offerType.addEventListener('change', checkPriceValidity);
   offerTime.addEventListener('change', checkTimeValidity);
+  capacitySelect.addEventListener('change', checkRoomNumberCapacityValidity);
 };
