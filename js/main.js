@@ -9,6 +9,7 @@ const mapCanvas = document.querySelector('#map-canvas');
 mapCanvas.appendChild(cardTemplate);
 window.console.log(cardTemplate);
 window.console.log(listOffers);
+checkValidity();
 
 checkValidity();
 
