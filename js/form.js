@@ -102,10 +102,23 @@ const checkTimeValidity = (evt) => {
 };
 
 export const checkValidity = () => {
-  offerPrice.addEventListener('input', checkPriceValidity);
+  //offerPrice.addEventListener('change', checkPriceValidity);
+  offerPrice.addEventListener('change', () =>
+    checkPriceValidity(),
+  );
   offerTitleInput.addEventListener('input', checkTitleValidity);
-  //selectRooms.addEventListener('change', checkRoomNumberCapacityValidity);
-  offerType.addEventListener('change', checkPriceValidity);
+  //selectRooms.addEventListener('input', checkRoomNumberCapacityValidity);
+  selectRooms.addEventListener('input', () =>
+    checkRoomNumberCapacityValidity(),
+  );
+  //offerType.addEventListener('change', checkPriceValidity);
+  offerType.addEventListener('change', () =>
+    checkPriceValidity(),
+  );
   offerTime.addEventListener('change', checkTimeValidity);
-  capacitySelect.addEventListener('change', checkRoomNumberCapacityValidity);
+  //capacitySelect.addEventListener('change', checkRoomNumberCapacityValidity);
+
+  capacitySelect.addEventListener('change', () =>
+    checkRoomNumberCapacityValidity(),
+  );
 };
