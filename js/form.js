@@ -68,7 +68,7 @@ const checkPriceValidity = () => {
 
 // Синхронизация полей времени заезда и выезда
 const checkTimeValidity = (firstTime, secondTime) => {
-  firstTime.addEventListener('input', () => secondTime.value = firstTime.value);
+  secondTime.value = firstTime.value;
 };
 
 export const checkValidity = () => {
@@ -82,8 +82,12 @@ export const checkValidity = () => {
   offerType.addEventListener('change', () =>
     checkPriceValidity(),
   );
-  timeIn.addEventListener('change', checkTimeValidity(timeIn, timeOut));
-  timeOut.addEventListener('change', checkTimeValidity(timeOut, timeIn));
+  timeIn.addEventListener('change', () =>
+    checkTimeValidity(timeIn, timeOut),
+  );
+  timeOut.addEventListener('change', () =>
+    checkTimeValidity(timeOut, timeIn),
+  );
   capacitySelect.addEventListener('change', () =>
     checkRoomNumberCapacityValidity(),
   );
