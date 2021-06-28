@@ -1,5 +1,4 @@
 export const offerForm = document.querySelector('.ad-form');
-const offerForm = document.querySelector('.ad-form');
 const offerTitleInput = offerForm.querySelector('#title');
 const offerType = offerForm.querySelector('#type');
 const offerPrice = offerForm.querySelector('#price');

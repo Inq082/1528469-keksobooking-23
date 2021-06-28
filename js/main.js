@@ -1,7 +1,6 @@
 import {listOffers} from './data.js';
 import  {getCardTemplate} from './card.js';
 import {checkValidity, offerForm, offerFormFields, filtersForm, filtersFormFieldsets, deactivatePage, activatePage} from './form.js';
-import {checkValidity} from './form.js';
 
 const cardTemplate = getCardTemplate(listOffers[0]);
 
