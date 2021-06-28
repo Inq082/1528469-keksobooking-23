@@ -69,7 +69,6 @@ const checkRoomNumberCapacityValidity = () => {
 };
 
 // Валидация цены
-
 const checkPriceValidity = () => {
   if (offerPrice.value > DEFAULT_MAX_PRICE) {
     offerPrice.setCustomValidity(`Цена не должна превышать ${DEFAULT_MAX_PRICE} руб.`);
