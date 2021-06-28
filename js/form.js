@@ -1,4 +1,4 @@
-const offerForm = document.querySelector('.ad-form');
+export const offerForm = document.querySelector('.ad-form');
 const offerTitleInput = offerForm.querySelector('#title');
 const offerType = offerForm.querySelector('#type');
 const offerPrice = offerForm.querySelector('#price');
@@ -7,10 +7,12 @@ const selectRooms = offerForm.querySelector('#room_number');
 const offerTime = offerForm.querySelector('.ad-form__element--time');
 const timeIn = offerTime.querySelector('#timein');
 const timeOut = offerTime.querySelector('#timeout');
+export const offerFormFields = Array.from(offerForm.children);
+export const filtersForm = document.querySelector('.map__filters');
+export const filtersFormFieldsets = Array.from(filtersForm.children);
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-//let MIN_PRICE = 1000;
 const DEFAULT_MAX_PRICE = 1000000;
 
 const DEFAULT_MIN_PRICE = {
@@ -19,6 +21,22 @@ const DEFAULT_MIN_PRICE = {
   hotel: 3000,
   house: 5000,
   palace: 10000,
+};
+
+//Деактивация формы
+export const deactivatePage = (form, fieldsets) => {
+  form.classList.add('ad-form--disabled');
+  fieldsets.forEach((fieldset) => {
+    fieldset.disabled = true;
+  });
+};
+
+//Активация формы
+export const activatePage = (form, fieldsets) => {
+  form.classList.remove('ad-form--disabled');
+  fieldsets.forEach((fieldset) => {
+    fieldset.disabled = false;
+  });
 };
 
 //Валидация заголовка
@@ -51,7 +69,6 @@ const checkRoomNumberCapacityValidity = () => {
 };
 
 // Валидация цены
-
 const checkPriceValidity = () => {
   if (offerPrice.value > DEFAULT_MAX_PRICE) {
     offerPrice.setCustomValidity(`Цена не должна превышать ${DEFAULT_MAX_PRICE} руб.`);
