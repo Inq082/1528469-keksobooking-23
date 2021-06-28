@@ -7,13 +7,10 @@ const selectRooms = offerForm.querySelector('#room_number');
 const offerTime = offerForm.querySelector('.ad-form__element--time');
 const timeIn = offerTime.querySelector('#timein');
 const timeOut = offerTime.querySelector('#timeout');
-
 export const offerFormFields = Array.from(offerForm.children);
 export const filtersForm = document.querySelector('.map__filters');
 export const filtersFormFieldsets = Array.from(filtersForm.children);
 
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const DEFAULT_MAX_PRICE = 1000000;
