@@ -7,9 +7,9 @@ const selectRooms = offerForm.querySelector('#room_number');
 const offerTime = offerForm.querySelector('.ad-form__element--time');
 const timeIn = offerTime.querySelector('#timein');
 const timeOut = offerTime.querySelector('#timeout');
-export const offerFormFields = Array.from(offerForm.children);
-export const filtersForm = document.querySelector('.map__filters');
-export const filtersFormFieldsets = Array.from(filtersForm.children);
+const filtersForm = document.querySelector('.map__filters');
+export const address = document.querySelector('#address');
+const filterFormsElements = Array.from(filtersForm.children).concat(Array.from(offerForm.children));
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -24,18 +24,20 @@ const DEFAULT_MIN_PRICE = {
 };
 
 //Деактивация формы
-export const deactivatePage = (form, fieldsets) => {
-  form.classList.add('ad-form--disabled');
-  fieldsets.forEach((fieldset) => {
-    fieldset.disabled = true;
+const deactivatePage = () => {
+  filtersForm.classList.add('map__filters--disabled');
+  offerForm.classList.add('ad-form--disabled');
+  filterFormsElements.forEach((item) => {
+    item.disabled = true;
   });
 };
 
 //Активация формы
-export const activatePage = (form, fieldsets) => {
-  form.classList.remove('ad-form--disabled');
-  fieldsets.forEach((fieldset) => {
-    fieldset.disabled = false;
+export const activatePage = () => {
+  filtersForm.classList.remove('map__filters--disabled');
+  offerForm.classList.remove('ad-form--disabled');
+  filterFormsElements.forEach((item) => {
+    item.disabled = false;
   });
 };
 
@@ -109,3 +111,5 @@ export const checkValidity = () => {
     checkRoomNumberCapacityValidity(),
   );
 };
+
+deactivatePage();

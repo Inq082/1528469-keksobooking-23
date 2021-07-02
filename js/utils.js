@@ -4,7 +4,7 @@ export function getRandomBetween(min, max){
 }
 //убираем округление и добавляем к параметрам условие указания количество знаков после запятой
 export function getRandomNumberPoint(min, max, point){
-  return (Math.random() * (max - min + 1) + min).toFixed(point);
+  return (Math.random() * (max - min) + min).toFixed(point);
 }
 //Генерируем рандомный массив заданной длины
 export function getArrayRandomLength(array, length) {
