@@ -1,4 +1,4 @@
-import './data.js';
+//import './data.js';
 import './card.js';
 //import {checkValidity, offerForm, offerFormFields, filtersForm, filtersFormFieldsets, deactivatePage, activatePage} from './form.js';
 import './form.js';

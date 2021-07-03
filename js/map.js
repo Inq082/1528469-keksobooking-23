@@ -59,8 +59,8 @@ const pinIcon = L.icon({
 listOffers.forEach((item) => {
   const marker = L.marker(
     {
-      lat: item.location.lat,
-      lng: item.location.lng,
+      lat: item.location.x,
+      lng: item.location.y,
     },
     {
       icon: pinIcon,
