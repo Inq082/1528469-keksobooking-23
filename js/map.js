@@ -3,6 +3,7 @@ import {activatePage} from './form.js';
 import {listOffers} from './data.js';
 import {getCardTemplate} from './card.js';
 
+let map = null;
 const DEFAULT_LAT = 35.6817;
 const DEFAULT_LNG = 139.75388;
 const DEFAULT_SCALE = 13;
@@ -62,22 +63,24 @@ const getOtherMarkers = () => {
       );
   });
 };
-const map = L.map('map-canvas')
+const getProperty = () => {
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+};
+
+map = L.map('map-canvas')
   .on('load', () => {
     activatePage();
     getMainMarker();
     getOtherMarkers();
-
+    getProperty();
     address.value = `${DEFAULT_LAT}, ${DEFAULT_LNG}`;
-  })
-  .setView({
-    lat: DEFAULT_LAT,
-    lng: DEFAULT_LNG,
-  }, DEFAULT_SCALE);
-
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+  });
+map.setView({
+  lat: DEFAULT_LAT,
+  lng: DEFAULT_LNG,
+}, DEFAULT_SCALE);
