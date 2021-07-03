@@ -8,7 +8,7 @@ const DEFAULT_LAT = 35.6817;
 const DEFAULT_LNG = 139.75388;
 const DEFAULT_SCALE = 13;
 
-const adMainMarker = () => {
+const addMainMarker = () => {
   const mainPinIcon = L.icon({
     iconUrl: './img/main-pin.svg',
     iconSize: [52, 52],
@@ -36,7 +36,7 @@ const adMainMarker = () => {
   });
 };
 
-const adOtherMarkers = () => {
+const addMarkers = () => {
   const pinIcon = L.icon({
     iconUrl: './img/pin.svg',
     iconSize: [40, 40],
@@ -63,7 +63,7 @@ const adOtherMarkers = () => {
       );
   });
 };
-const setProperty = () => {
+const setTitleLayer = () => {
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
@@ -75,9 +75,9 @@ const setProperty = () => {
 map = L.map('map-canvas')
   .on('load', () => {
     activatePage();
-    adMainMarker();
-    adOtherMarkers();
-    setProperty();
+    addMainMarker();
+    addMarkers();
+    setTitleLayer();
     address.value = `${DEFAULT_LAT}, ${DEFAULT_LNG}`;
   });
 map.setView({
