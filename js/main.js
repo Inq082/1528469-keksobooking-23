@@ -7,12 +7,13 @@ import './map.js';
 
 //const mapCanvas = document.querySelector('#map-canvas');
 
+//console.log(listOffers);
+
 //mapCanvas.appendChild(cardTemplate);
 //window.console.log(cardTemplate);
 //window.console.log(listOffers);
 
 //checkValidity();
-//createMap();
 
 //deactivatePage(offerForm, offerFormFields);
 //activatePage(filtersForm, filtersFormFieldsets);
