@@ -56,8 +56,8 @@ const createObject = function(index) {
     },
 
     location: {
-      x : lat,
-      y : lng,
+      lat : lat,
+      lng : lng,
     },
   };
   return objectRoom;
