@@ -1,5 +1,5 @@
 import {OFFER_TYPE, OFFER_ROOM, OFFER_GUEST} from './data.js';
-import {endParam, removeChildrens} from './utils.js';
+import {endParam} from './utils.js';
 
 //скрываем при отсутствии данных
 const setCardElementText = (cardElement, className, text) => {
@@ -8,6 +8,34 @@ const setCardElementText = (cardElement, className, text) => {
     cardRow.classList.add('hidden');
   } else {
     cardRow.textContent = text;
+  }
+};
+//photos
+const getImages = (container, imageSources) => {
+  container.innerHTML = '';
+  if (imageSources) {
+    imageSources.forEach((imageSource) => {
+      const image = document.createElement('img');
+      image.src = imageSource;
+      image.classList.add('popup__photo');
+      image.width = '45';
+      image.height = '40';
+      image.alt = 'Фотография жилья';
+      container.appendChild(image);
+    });
+  }
+};
+
+//features
+const getFeatures = (container, listElement) => {
+  container.innerHTML = '';
+  if (listElement) {
+    listElement.forEach((feature) => {
+      const listItem = document.createElement('li');
+      listItem.classList.add('popup__feature', `popup__feature--${feature}`);
+      listItem.textContent = feature;
+      container.appendChild(listItem);
+    });
   }
 };
 
@@ -28,7 +56,9 @@ export const getCardTemplate = (adsItem) => {
   setCardElementText(cardElement, '.popup__text--capacity', `${adsItem.offer.rooms} ${rooms} для ${adsItem.offer.guests} ${guests}`);
   setCardElementText(cardElement, '.popup__text--time', `Заезд после ${adsItem.offer.checkin} , выезд до ${adsItem.offer.checkout}`);
   setCardElementText(cardElement, '.popup__description', adsItem.offer.description);
-  const photosElements = adsItem.offer.photos;
+  getFeatures(cardElement.querySelector('.popup__features'), adsItem.offer.features);
+  getImages(cardElement.querySelector('.popup__photos'), adsItem.offer.photos);
+  /*const photosElements = adsItem.offer.photos;
   const photoContainer = cardElement.querySelector('.popup__photos');
   removeChildrens(photoContainer);
   if (photosElements) {
@@ -54,6 +84,8 @@ export const getCardTemplate = (adsItem) => {
       });
     }
   }
+
+   */
   cardElement.querySelector('.popup__avatar').src = adsItem.author.avatar;
 
   return cardElement;
