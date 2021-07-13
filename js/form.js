@@ -10,6 +10,9 @@ const timeOut = offerTime.querySelector('#timeout');
 const filtersForm = document.querySelector('.map__filters');
 export const address = document.querySelector('#address');
 const filterFormsElements = Array.from(filtersForm.children).concat(Array.from(offerForm.children));
+export const resetButton = document.querySelector('.ad-form__reset');
+export const messageSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
+export const messageErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -111,6 +114,16 @@ export const checkValidity = () => {
     checkRoomNumberCapacityValidity(),
   );
 };
+const removeMessage = () => {
+  document.querySelectorAll('.success, .error').forEach((messageElement) => messageElement.remove());
+};
+document.addEventListener('keydown', (evt) => {
+  if (evt.code === 'Escape') {
+    removeMessage();
+  }
+});
+
+document.addEventListener('click', removeMessage);
 
 deactivatePage();
 checkValidity();

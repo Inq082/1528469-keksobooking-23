@@ -1,34 +1,26 @@
 //Получает данные
-export const getData = (onSuccess, onError) => {
+export const getData = (onSuccess, onFail) => {
   fetch('https://23.javascript.pages.academy/keksobooking/data')
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
-      throw new Error;
     })
     .then((offers) => {
       onSuccess(offers);
     })
-    .catch ((err) => {
-      onError(err);
-    });
+    .catch(onFail);
 };
 
 //Отправляет данные
-export const sendData = (body, onSuccess, onFail) => {
+export const sendData = (onSuccess, onFail, data) => {
   fetch('https://23.javascript.pages.academy/keksobooking', {
     method: 'POST',
-    body,
+    body: data,
   })
     .then((response) => {
       if (response.ok) {
-        onSuccess();
-      } else {
-        onFail();
-      }
-    })
-    .catch(() => {
-      onFail();
-    });
+        return onSuccess();
+      } throw new Error('Ошибка отправки данных');
+    }).catch(onFail);
 };

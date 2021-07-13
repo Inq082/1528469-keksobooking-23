@@ -58,34 +58,6 @@ export const getCardTemplate = (adsItem) => {
   setCardElementText(cardElement, '.popup__description', adsItem.offer.description);
   getFeatures(cardElement.querySelector('.popup__features'), adsItem.offer.features);
   getImages(cardElement.querySelector('.popup__photos'), adsItem.offer.photos);
-  /*const photosElements = adsItem.offer.photos;
-  const photoContainer = cardElement.querySelector('.popup__photos');
-  removeChildrens(photoContainer);
-  if (photosElements) {
-    photosElements.forEach((imageSource) => {
-      const image = document.createElement('img');
-      image.src = imageSource;
-      image.classList.add('popup__photo');
-      image.width = 45;
-      image.height = 40;
-      image.alt = 'Фотография жилья';
-      photoContainer.appendChild(image);
-    });
-
-    const featureContainer = cardElement.querySelector('.popup__features');
-    featureContainer.innerHTML = '';
-    const features = adsItem.offer.features;
-    if (features) {
-      features.forEach((feature) => {
-        const listItem = document.createElement('li');
-        listItem.classList.add('.popup__features');
-        listItem.classList.add(`popup__feature--${feature}`);
-        featureContainer.appendChild(listItem);
-      });
-    }
-  }
-
-   */
   cardElement.querySelector('.popup__avatar').src = adsItem.author.avatar;
 
   return cardElement;

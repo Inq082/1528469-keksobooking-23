@@ -40,8 +40,4 @@ export const endParam = function (count, variants) {
   return variants[2];
 };
 export const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
-export const removeChildrens = ((parent) => {
-  for (let index = parent.children.length - 1; index >= 0; index--) {
-    parent.children[index].remove();
-  }
-});
+
