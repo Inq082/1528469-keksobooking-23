@@ -17,6 +17,7 @@ export const messageErrorTemplate = document.querySelector('#error').content.que
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const DEFAULT_MAX_PRICE = 1000000;
+const MAX_CAPACITY = '100';
 
 const DEFAULT_MIN_PRICE = {
   bungalow: 0,
@@ -60,17 +61,17 @@ const checkTitleValidity = () => {
 };
 
 // Валидация количества гостей и комнат
-const checkRoomNumberCapacityValidity = () => {
-  const numberOfGuests = {
-    '1': [1],
-    '2': [1, 2],
-    '3': [1, 2, 3],
-    '100': [0],
-  };
-
-  capacitySelect.setCustomValidity(numberOfGuests[selectRooms.value].includes(Number(capacitySelect.value)) ? '' : 'выберите валидное значение');
+const validateRoomCapacity = (value) => {
+  if (value === MAX_CAPACITY && capacitySelect.value !== '0') {
+    capacitySelect.setCustomValidity('100 комнат может быть только "не для гостей"');
+  } else if (value !== MAX_CAPACITY && capacitySelect.value === '0') {
+    capacitySelect.setCustomValidity('Выберите количество гостей, оно не может равняться 0');
+  } else if (value < capacitySelect.value) {
+    capacitySelect.setCustomValidity(`Количество гостей должно быть не больше ${value}`);
+  } else {
+    capacitySelect.setCustomValidity('');
+  }
   capacitySelect.reportValidity();
-
 };
 
 // Валидация цены
@@ -99,7 +100,7 @@ export const checkValidity = () => {
   );
   offerTitleInput.addEventListener('input', checkTitleValidity);
   selectRooms.addEventListener('input', () =>
-    checkRoomNumberCapacityValidity(),
+    validateRoomCapacity(selectRooms.value),
   );
   offerType.addEventListener('change', () =>
     checkPriceValidity(),
@@ -110,8 +111,8 @@ export const checkValidity = () => {
   timeOut.addEventListener('change', () =>
     checkTimeValidity(timeOut, timeIn),
   );
-  capacitySelect.addEventListener('change', () =>
-    checkRoomNumberCapacityValidity(),
+  capacitySelect.addEventListener('input', () =>
+    validateRoomCapacity(selectRooms.value),
   );
 };
 const removeMessage = () => {
