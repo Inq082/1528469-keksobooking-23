@@ -1,5 +1,14 @@
-import {OFFER_TYPE, OFFER_ROOM, OFFER_GUEST} from './data.js';
 import {endParam} from './utils.js';
+
+const OFFER_TYPE = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
+};
+const OFFER_ROOM = ['комната', 'комнаты', 'комнат'];
+const OFFER_GUEST = ['гостя', 'гостей', 'гостей'];
 
 //скрываем при отсутствии данных
 const setCardElementText = (cardElement, className, text) => {
