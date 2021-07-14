@@ -1,3 +1,8 @@
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+const DEFAULT_MAX_PRICE = 1000000;
+const MAX_CAPACITY = '100';
+
 export const offerForm = document.querySelector('.ad-form');
 const offerTitleInput = offerForm.querySelector('#title');
 const offerType = offerForm.querySelector('#type');
@@ -14,12 +19,7 @@ export const resetButton = document.querySelector('.ad-form__reset');
 export const messageSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
 export const messageErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
-const DEFAULT_MAX_PRICE = 1000000;
-const MAX_CAPACITY = '100';
-
-const DEFAULT_MIN_PRICE = {
+const DefaultMinPrice = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -56,7 +56,6 @@ const checkTitleValidity = () => {
   } else {
     offerTitleInput.setCustomValidity('');
   }
-
   offerTitleInput.reportValidity();
 };
 
@@ -79,13 +78,13 @@ const checkPriceValidity = () => {
   if (offerPrice.value > DEFAULT_MAX_PRICE) {
     offerPrice.setCustomValidity(`Цена не должна превышать ${DEFAULT_MAX_PRICE} руб.`);
 
-  } else if (offerPrice.value < DEFAULT_MIN_PRICE[offerType.value]) {
-    offerPrice.setCustomValidity(`Цена должна быть не менее ${DEFAULT_MIN_PRICE[offerType.value]} руб.`);
+  } else if (offerPrice.value < DefaultMinPrice[offerType.value]) {
+    offerPrice.setCustomValidity(`Цена должна быть не менее ${DefaultMinPrice[offerType.value]} руб.`);
 
   } else {
     offerPrice.setCustomValidity('');
   }
-  offerPrice.placeholder = DEFAULT_MIN_PRICE[offerType.value];
+  offerPrice.placeholder = DefaultMinPrice[offerType.value];
   offerPrice.reportValidity();
 };
 

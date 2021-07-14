@@ -1,15 +1,4 @@
-import {isEscEvent} from './utils.js';
-
 const MESSAGE_SHOW_TIME = 5000;
-
-export const onMessageHide = (evt) => {
-  const message = document.querySelector('.show-message');
-  if (isEscEvent(evt) || evt.type === 'click') {
-    evt.preventDefault();
-    message.remove();
-    document.removeEventListener('keydown', onMessageHide);
-  }
-};
 
 export const showMessageGetError = () => {
   const body = document.querySelector('body');
@@ -29,29 +18,4 @@ export const showMessageGetError = () => {
   setTimeout(() => {
     messageContainer.remove();
   }, MESSAGE_SHOW_TIME);
-};
-
-export const showMessageSendSuccess = () => {
-  const body = document.querySelector('body');
-  const messageSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
-  const messageSuccess = messageSuccessTemplate.cloneNode(true);
-  messageSuccess.classList.add('show-message');
-  body.append(messageSuccess);
-
-  document.addEventListener('click', onMessageHide);
-  document.addEventListener('keydown', onMessageHide);
-};
-
-export const showMessageSendError = () => {
-  const body = document.querySelector('body');
-  const messageErrorTemplate = document.querySelector('#error').content.querySelector('.error');
-  const messageError = messageErrorTemplate.cloneNode(true);
-  messageError.classList.add('show-message');
-
-  body.append(messageError);
-
-  const buttonCloseMessage = document.querySelector('.error__button');
-  buttonCloseMessage.addEventListener('click', onMessageHide);
-  document.addEventListener('click', onMessageHide);
-  document.addEventListener('keydown', onMessageHide);
 };

@@ -4,21 +4,20 @@ import {getCardTemplate} from './card.js';
 import {getData, sendData} from './api.js';
 import {showMessageGetError} from './messages.js';
 
-let map = null;
 const DEFAULT_COORDS = {
   lat: 35.68170,
   lng: 139.75388,
 };
-
 const DEFAULT_SCALE = 13;
 const OFFERS_COUNT = 10;
-
 
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
+
+let map = null;
 
 const mainMarker = L.marker(
   DEFAULT_COORDS,
