@@ -1,3 +1,8 @@
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+const DEFAULT_MAX_PRICE = 1000000;
+const MAX_CAPACITY = '100';
+
 export const offerForm = document.querySelector('.ad-form');
 const offerTitleInput = offerForm.querySelector('#title');
 const offerType = offerForm.querySelector('#type');
@@ -10,12 +15,11 @@ const timeOut = offerTime.querySelector('#timeout');
 const filtersForm = document.querySelector('.map__filters');
 export const address = document.querySelector('#address');
 const filterFormsElements = Array.from(filtersForm.children).concat(Array.from(offerForm.children));
+export const resetButton = document.querySelector('.ad-form__reset');
+export const messageSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
+export const messageErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
-const DEFAULT_MAX_PRICE = 1000000;
-
-const DEFAULT_MIN_PRICE = {
+const DefaultMinPrice = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -52,22 +56,21 @@ const checkTitleValidity = () => {
   } else {
     offerTitleInput.setCustomValidity('');
   }
-
   offerTitleInput.reportValidity();
 };
 
 // Валидация количества гостей и комнат
-const checkRoomNumberCapacityValidity = () => {
-  const numberOfGuests = {
-    '1': [1],
-    '2': [1, 2],
-    '3': [1, 2, 3],
-    '100': [0],
-  };
-
-  capacitySelect.setCustomValidity(numberOfGuests[selectRooms.value].includes(Number(capacitySelect.value)) ? '' : 'выберите валидное значение');
+const validateRoomCapacity = (value) => {
+  if (value === MAX_CAPACITY && capacitySelect.value !== '0') {
+    capacitySelect.setCustomValidity('100 комнат может быть только "не для гостей"');
+  } else if (value !== MAX_CAPACITY && capacitySelect.value === '0') {
+    capacitySelect.setCustomValidity('Выберите количество гостей, оно не может равняться 0');
+  } else if (value < capacitySelect.value) {
+    capacitySelect.setCustomValidity(`Количество гостей должно быть не больше ${value}`);
+  } else {
+    capacitySelect.setCustomValidity('');
+  }
   capacitySelect.reportValidity();
-
 };
 
 // Валидация цены
@@ -75,13 +78,13 @@ const checkPriceValidity = () => {
   if (offerPrice.value > DEFAULT_MAX_PRICE) {
     offerPrice.setCustomValidity(`Цена не должна превышать ${DEFAULT_MAX_PRICE} руб.`);
 
-  } else if (offerPrice.value < DEFAULT_MIN_PRICE[offerType.value]) {
-    offerPrice.setCustomValidity(`Цена должна быть не менее ${DEFAULT_MIN_PRICE[offerType.value]} руб.`);
+  } else if (offerPrice.value < DefaultMinPrice[offerType.value]) {
+    offerPrice.setCustomValidity(`Цена должна быть не менее ${DefaultMinPrice[offerType.value]} руб.`);
 
   } else {
     offerPrice.setCustomValidity('');
   }
-  offerPrice.placeholder = DEFAULT_MIN_PRICE[offerType.value];
+  offerPrice.placeholder = DefaultMinPrice[offerType.value];
   offerPrice.reportValidity();
 };
 
@@ -96,7 +99,7 @@ export const checkValidity = () => {
   );
   offerTitleInput.addEventListener('input', checkTitleValidity);
   selectRooms.addEventListener('input', () =>
-    checkRoomNumberCapacityValidity(),
+    validateRoomCapacity(selectRooms.value),
   );
   offerType.addEventListener('change', () =>
     checkPriceValidity(),
@@ -107,10 +110,20 @@ export const checkValidity = () => {
   timeOut.addEventListener('change', () =>
     checkTimeValidity(timeOut, timeIn),
   );
-  capacitySelect.addEventListener('change', () =>
-    checkRoomNumberCapacityValidity(),
+  capacitySelect.addEventListener('input', () =>
+    validateRoomCapacity(selectRooms.value),
   );
 };
+const removeMessage = () => {
+  document.querySelectorAll('.success, .error').forEach((messageElement) => messageElement.remove());
+};
+document.addEventListener('keydown', (evt) => {
+  if (evt.code === 'Escape') {
+    removeMessage();
+  }
+});
+
+document.addEventListener('click', removeMessage);
 
 deactivatePage();
 checkValidity();

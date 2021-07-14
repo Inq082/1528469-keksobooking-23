@@ -1,5 +1,14 @@
-import {OFFER_TYPE, OFFER_ROOM, OFFER_GUEST} from './data.js';
 import {endParam} from './utils.js';
+
+const OFFER_TYPE = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
+};
+const OFFER_ROOM = ['комната', 'комнаты', 'комнат'];
+const OFFER_GUEST = ['гостя', 'гостей', 'гостей'];
 
 //скрываем при отсутствии данных
 const setCardElementText = (cardElement, className, text) => {
@@ -13,26 +22,30 @@ const setCardElementText = (cardElement, className, text) => {
 //photos
 const getImages = (container, imageSources) => {
   container.innerHTML = '';
-  imageSources.forEach((imageSource) => {
-    const image = document.createElement('img');
-    image.src = imageSource;
-    image.classList.add('popup__photo');
-    image.width = '45';
-    image.height = '40';
-    image.alt = 'Фотография жилья';
-    container.appendChild(image);
-  });
+  if (imageSources) {
+    imageSources.forEach((imageSource) => {
+      const image = document.createElement('img');
+      image.src = imageSource;
+      image.classList.add('popup__photo');
+      image.width = '45';
+      image.height = '40';
+      image.alt = 'Фотография жилья';
+      container.appendChild(image);
+    });
+  }
 };
 
 //features
 const getFeatures = (container, listElement) => {
   container.innerHTML = '';
-  listElement.forEach((feature) => {
-    const listItem = document.createElement('li');
-    listItem.classList.add('popup__feature', `popup__feature--${feature}`);
-    listItem.textContent = feature;
-    container.appendChild(listItem);
-  });
+  if (listElement) {
+    listElement.forEach((feature) => {
+      const listItem = document.createElement('li');
+      listItem.classList.add('popup__feature', `popup__feature--${feature}`);
+      listItem.textContent = feature;
+      container.appendChild(listItem);
+    });
+  }
 };
 
 //создаем DOM объект
@@ -51,10 +64,9 @@ export const getCardTemplate = (adsItem) => {
   setCardElementText(cardElement, '.popup__type', OFFER_TYPE[adsItem.offer.type]);
   setCardElementText(cardElement, '.popup__text--capacity', `${adsItem.offer.rooms} ${rooms} для ${adsItem.offer.guests} ${guests}`);
   setCardElementText(cardElement, '.popup__text--time', `Заезд после ${adsItem.offer.checkin} , выезд до ${adsItem.offer.checkout}`);
-  getFeatures(cardElement.querySelector('.popup__features'), adsItem.offer.features);
   setCardElementText(cardElement, '.popup__description', adsItem.offer.description);
+  getFeatures(cardElement.querySelector('.popup__features'), adsItem.offer.features);
   getImages(cardElement.querySelector('.popup__photos'), adsItem.offer.photos);
-
   cardElement.querySelector('.popup__avatar').src = adsItem.author.avatar;
 
   return cardElement;
