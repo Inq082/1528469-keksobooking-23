@@ -3,6 +3,9 @@ import {activatePage, messageSuccessTemplate, messageErrorTemplate} from './form
 import {getCardTemplate} from './card.js';
 import {getData, sendData} from './api.js';
 import {showMessageGetError} from './messages.js';
+import {initFilterEventLoader} from './filter.js';
+import {debounce} from './utils/debounce.js';
+import {adFilter} from './filter.js';
 
 const DEFAULT_COORDS = {
   lat: 35.68170,
@@ -17,7 +20,8 @@ const mainPinIcon = L.icon({
   iconAnchor: [26, 52],
 });
 
-let map = null;
+const map = L.map('map-canvas');
+const markerGroup = L.layerGroup().addTo(map);
 
 const mainMarker = L.marker(
   DEFAULT_COORDS,
@@ -51,7 +55,7 @@ export const addMarkers = (item) => {
     },
   );
   marker
-    .addTo(map)
+    .addTo(markerGroup)
     .bindPopup(
       getCardTemplate(item),
       {
@@ -66,11 +70,6 @@ const setTitleLayer = () => {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
-};
-const initMarkers = (offers) => {
-  offers.slice(0, OFFERS_COUNT).forEach((item) => {
-    addMarkers(item);
-  });
 };
 
 const resetPage = () => {
@@ -96,19 +95,24 @@ resetButton.addEventListener('click', () => {
   resetPage();
 });
 
-map = L.map('map-canvas')
-  .on('load', () => {
-    activatePage();
-    //addMainMarker();
-    getData((data) => {
-      initMarkers(data);
-    }, showMessageGetError);
-    //addMarkers();
-    setTitleLayer();
-    address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
+const initMarkers = (offers) => {
+  offers.filter(adFilter).slice(0, OFFERS_COUNT).forEach((item) => {
+    addMarkers(item);
   });
-map.setView(DEFAULT_COORDS, DEFAULT_SCALE);
+};
 
-const markerGroup = L.layerGroup().addTo(map);
-mainMarker.addTo(markerGroup);
+map.on('load', () => {
+  activatePage();
+  getData((data) => {
+    initMarkers(data);
+    initFilterEventLoader(debounce(() => {
+      markerGroup.clearLayers();
+      initMarkers(data);
+    }));
+  }, showMessageGetError);
+  setTitleLayer();
+  address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
+}).setView(DEFAULT_COORDS, DEFAULT_SCALE);
 
+
+mainMarker.addTo(map);
