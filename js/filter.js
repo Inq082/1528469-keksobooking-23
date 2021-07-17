@@ -14,8 +14,8 @@ const prices = {
 export const adFilter = ({offer}) => {
   const housingCondition = (housingTypeFilter.value === 'any') || (offer.type === housingTypeFilter.value);
   const pricesCondition = (housingPriceFilter.value === 'any') || (prices[housingPriceFilter.value](offer.price));
-  const roomsCondition = (housingRoomsFilter.value === 'any') || (offer.rooms === housingRoomsFilter.value);
-  const guestsCondition = (housingGuestsFilter.value === 'any') || (offer.rooms === housingGuestsFilter.value);
+  const roomsCondition = (housingRoomsFilter.value === 'any') || (offer.rooms === parseInt(housingRoomsFilter.value, 10));
+  const guestsCondition = (housingGuestsFilter.value === 'any') || (offer.guests === parseInt(housingGuestsFilter.value, 10));
   const checkedFeatures = document.querySelectorAll('.map__checkbox:checked');
   if (checkedFeatures && !offer.features) {
     return false;
