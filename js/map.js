@@ -71,41 +71,40 @@ const resetPage = () => {
   address.readOnly = true;
   address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
 };
-const offerMessagesHandler = () => {
-  offerForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const formData = new FormData(evt.target);
-    sendData(() => {
-      const successMessageElement = messageSuccessTemplate.cloneNode(true);
-      document.body.append(successMessageElement);
-      resetPage();
-    },
-    () => {
-      const errorMessageElement = messageErrorTemplate.cloneNode(true);
-      document.body.append(errorMessageElement);
-    }, formData);
-  });
-};
+
+offerForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const formData = new FormData(evt.target);
+  sendData(() => {
+    const successMessageElement = messageSuccessTemplate.cloneNode(true);
+    document.body.append(successMessageElement);
+    resetPage();
+  },
+  () => {
+    const errorMessageElement = messageErrorTemplate.cloneNode(true);
+    document.body.append(errorMessageElement);
+  }, formData);
+});
 
 const initMarkers = (offers) => {
   offers.filter(adFilter).slice(0, OFFERS_COUNT).forEach((item) => {
     addMarkers(item);
   });
 };
-const mapLoad = () => {
-  map.on('load', () => {
-    getData((data) => {
+
+map.on('load', () => {
+  getData((data) => {
+    initMarkers(data);
+    activatePage();
+    initFilterEventLoader(debounce(() => {
+      markerGroup.clearLayers();
       initMarkers(data);
-      activatePage();
-      initFilterEventLoader(debounce(() => {
-        markerGroup.clearLayers();
-        initMarkers(data);
-      }));
-    }, showMessageGetError);
-    setTitleLayer();
-    address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
-  }).setView(DEFAULT_COORDS, DEFAULT_SCALE);
-};
+    }));
+  }, showMessageGetError);
+  setTitleLayer();
+  address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
+}).setView(DEFAULT_COORDS, DEFAULT_SCALE);
+
 mainMarker.addTo(map);
 mainMarker.on('moveend', (evt) => {
   const currentCoordinates = evt.target.getLatLng();
@@ -117,7 +116,3 @@ mainMarker.on('moveend', (evt) => {
 resetButton.addEventListener('click', () => {
   resetPage();
 });
-
-offerMessagesHandler ();
-mapLoad();
-
