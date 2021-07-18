@@ -71,7 +71,7 @@ const resetPage = () => {
   address.readOnly = true;
   address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
 };
-const evtHandler = (evt) => {
+const onFormSubmit = (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
   sendData(() => {
@@ -90,7 +90,7 @@ const initMarkers = (offers) => {
     addMarkers(item);
   });
 };
-const mapHandler = () => {
+const onMapLoad = () => {
   getData((data) => {
     initMarkers(data);
     activatePage();
@@ -114,6 +114,6 @@ mainMarker.on('moveend', (evt) => {
 resetButton.addEventListener('click', () => {
   resetPage();
 });
-map.on('load', mapHandler).setView(DEFAULT_COORDS, DEFAULT_SCALE);
-offerForm.addEventListener('submit', evtHandler);
+map.on('load', onMapLoad).setView(DEFAULT_COORDS, DEFAULT_SCALE);
+offerForm.addEventListener('submit', onFormSubmit);
 export {addMarkers};
