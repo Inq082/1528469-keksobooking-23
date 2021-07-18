@@ -1,5 +1,5 @@
 //Получает данные
-export const getData = (onSuccess, onFail) => {
+const getData = (onSuccess, onFail) => {
   fetch('https://23.javascript.pages.academy/keksobooking/data')
     .then((response) => {
       if (response.ok) {
@@ -13,7 +13,7 @@ export const getData = (onSuccess, onFail) => {
 };
 
 //Отправляет данные
-export const sendData = (onSuccess, onFail, data) => {
+const sendData = (onSuccess, onFail, data) => {
   fetch('https://23.javascript.pages.academy/keksobooking', {
     method: 'POST',
     body: data,
@@ -24,3 +24,4 @@ export const sendData = (onSuccess, onFail, data) => {
       } throw new Error('Ошибка отправки данных');
     }).catch(onFail);
 };
+export {getData, sendData};
