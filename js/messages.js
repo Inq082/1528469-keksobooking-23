@@ -1,6 +1,6 @@
 const MESSAGE_SHOW_TIME = 5000;
 
-export const showMessageGetError = () => {
+const showMessageGetError = () => {
   const body = document.querySelector('body');
   const messageContainer = document.querySelector('#error-load').content.querySelector('.error-load');
   const мessageText = messageContainer.querySelector('.error-load__message');
@@ -19,3 +19,4 @@ export const showMessageGetError = () => {
     messageContainer.remove();
   }, MESSAGE_SHOW_TIME);
 };
+export {showMessageGetError};

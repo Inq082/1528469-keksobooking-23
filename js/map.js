@@ -31,7 +31,7 @@ const mainMarker = L.marker(
   },
 );
 
-export const addMarkers = (item) => {
+const addMarkers = (item) => {
   const pinIcon = L.icon({
     iconUrl: './img/pin.svg',
     iconSize: [40, 40],
@@ -85,14 +85,12 @@ const evtHandler = (evt) => {
   }, formData);
 };
 
-offerForm.addEventListener('submit', evtHandler);
-
 const initMarkers = (offers) => {
   offers.filter(adFilter).slice(0, OFFERS_COUNT).forEach((item) => {
     addMarkers(item);
   });
 };
-const initMap = (mapHandler) => {
+const mapHandler = () => {
   getData((data) => {
     initMarkers(data);
     activatePage();
@@ -103,10 +101,8 @@ const initMap = (mapHandler) => {
   }, showMessageGetError);
   setTitleLayer();
   address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
-  map.on('load', mapHandler).setView(DEFAULT_COORDS, DEFAULT_SCALE);
 
 };
-
 mainMarker.addTo(map);
 mainMarker.on('moveend', (evt) => {
   const currentCoordinates = evt.target.getLatLng();
@@ -118,5 +114,6 @@ mainMarker.on('moveend', (evt) => {
 resetButton.addEventListener('click', () => {
   resetPage();
 });
-
-initMap(DEFAULT_COORDS, DEFAULT_SCALE);
+map.on('load', mapHandler).setView(DEFAULT_COORDS, DEFAULT_SCALE);
+offerForm.addEventListener('submit', evtHandler);
+export {addMarkers};

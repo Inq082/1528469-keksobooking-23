@@ -3,7 +3,7 @@ const MAX_TITLE_LENGTH = 100;
 const DEFAULT_MAX_PRICE = 1000000;
 const MAX_CAPACITY = '100';
 
-export const offerForm = document.querySelector('.ad-form');
+const offerForm = document.querySelector('.ad-form');
 const offerTitleInput = offerForm.querySelector('#title');
 const offerType = offerForm.querySelector('#type');
 const offerPrice = offerForm.querySelector('#price');
@@ -13,11 +13,11 @@ const offerTime = offerForm.querySelector('.ad-form__element--time');
 const timeIn = offerTime.querySelector('#timein');
 const timeOut = offerTime.querySelector('#timeout');
 const filtersForm = document.querySelector('.map__filters');
-export const address = document.querySelector('#address');
+const address = document.querySelector('#address');
 const filterFormsElements = Array.from(filtersForm.children).concat(Array.from(offerForm.children));
-export const resetButton = document.querySelector('.ad-form__reset');
-export const messageSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
-export const messageErrorTemplate = document.querySelector('#error').content.querySelector('.error');
+const resetButton = document.querySelector('.ad-form__reset');
+const messageSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
+const messageErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const DefaultMinPrice = {
   bungalow: 0,
@@ -37,7 +37,7 @@ const deactivatePage = () => {
 };
 
 //Активация формы
-export const activatePage = () => {
+const activatePage = () => {
   filtersForm.classList.remove('map__filters--disabled');
   offerForm.classList.remove('ad-form--disabled');
   filterFormsElements.forEach((item) => {
@@ -93,7 +93,7 @@ const checkTimeValidity = (firstTime, secondTime) => {
   secondTime.value = firstTime.value;
 };
 
-export const checkValidity = () => {
+const checkValidity = () => {
   offerPrice.addEventListener('change', () =>
     checkPriceValidity(),
   );
@@ -128,3 +128,12 @@ document.addEventListener('click', removeMessage);
 deactivatePage();
 checkValidity();
 
+export {
+  offerForm,
+  address,
+  resetButton,
+  messageSuccessTemplate,
+  messageErrorTemplate,
+  activatePage,
+  checkValidity
+};

@@ -11,7 +11,7 @@ const prices = {
 };
 
 
-export const adFilter = ({offer}) => {
+const adFilter = ({offer}) => {
   const housingCondition = (housingTypeFilter.value === 'any') || (offer.type === housingTypeFilter.value);
   const pricesCondition = (housingPriceFilter.value === 'any') || (prices[housingPriceFilter.value](offer.price));
   const roomsCondition = (housingRoomsFilter.value === 'any') || (offer.rooms === parseInt(housingRoomsFilter.value, 10));
@@ -28,6 +28,7 @@ export const adFilter = ({offer}) => {
   return housingCondition && pricesCondition && roomsCondition && guestsCondition;
 };
 
-export const initFilterEventLoader = (handler) => {
+const initFilterEventLoader = (handler) => {
   mapFilterForm.addEventListener('change', handler);
 };
+export {adFilter, initFilterEventLoader};
