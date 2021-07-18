@@ -2,6 +2,7 @@ const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const DEFAULT_MAX_PRICE = 1000000;
 const MAX_CAPACITY = '100';
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const offerForm = document.querySelector('.ad-form');
 const offerTitleInput = offerForm.querySelector('#title');
@@ -18,6 +19,10 @@ const filterFormsElements = Array.from(filtersForm.children).concat(Array.from(o
 const resetButton = document.querySelector('.ad-form__reset');
 const messageSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
 const messageErrorTemplate = document.querySelector('#error').content.querySelector('.error');
+const avatarChooser = document.querySelector('.ad-form__field');
+const avatarPreview = document.querySelector('.ad-form-header__preview img');
+const photoChooser = document.querySelector('.ad-form__upload');
+const photoContainer = document.querySelector('.ad-form__photo');
 
 const DefaultMinPrice = {
   bungalow: 0,
@@ -117,6 +122,38 @@ const checkValidity = () => {
 const removeMessage = () => {
   document.querySelectorAll('.success, .error').forEach((messageElement) => messageElement.remove());
 };
+
+const onFormAvatarLoad = (evt) => {
+  const file = evt.target.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      avatarPreview.src = reader.result;
+    });
+    reader.readAsDataURL(file);
+  }
+};
+
+const onFormPhotoLoad = (evt) => {
+  const file = evt.target.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      photoContainer.innerHTML = '';
+      const previewPhoto = document.createElement('img');
+      previewPhoto.setAttribute('width', '70');
+      previewPhoto.setAttribute('height', '70');
+      photoContainer.appendChild(previewPhoto);
+      previewPhoto.src = reader.result;
+    });
+    reader.readAsDataURL(file);
+  }
+};
+
 document.addEventListener('keydown', (evt) => {
   if (evt.code === 'Escape') {
     removeMessage();
@@ -124,7 +161,8 @@ document.addEventListener('keydown', (evt) => {
 });
 
 document.addEventListener('click', removeMessage);
-
+avatarChooser.addEventListener('change', onFormAvatarLoad);
+photoChooser.addEventListener('change', onFormPhotoLoad);
 deactivatePage();
 checkValidity();
 
