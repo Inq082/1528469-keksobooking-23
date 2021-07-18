@@ -71,8 +71,7 @@ const resetPage = () => {
   address.readOnly = true;
   address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
 };
-
-offerForm.addEventListener('submit', (evt) => {
+const evtHandler = (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
   sendData(() => {
@@ -84,26 +83,29 @@ offerForm.addEventListener('submit', (evt) => {
     const errorMessageElement = messageErrorTemplate.cloneNode(true);
     document.body.append(errorMessageElement);
   }, formData);
-});
+};
+
+offerForm.addEventListener('submit', (evtHandler));
 
 const initMarkers = (offers) => {
   offers.filter(adFilter).slice(0, OFFERS_COUNT).forEach((item) => {
     addMarkers(item);
   });
 };
-
-map.on('load', () => {
-  getData((data) => {
-    initMarkers(data);
-    activatePage();
-    initFilterEventLoader(debounce(() => {
-      markerGroup.clearLayers();
+const initMap = (location, zoom) => {
+  map.on('load', () => {
+    getData((data) => {
       initMarkers(data);
-    }));
-  }, showMessageGetError);
-  setTitleLayer();
-  address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
-}).setView(DEFAULT_COORDS, DEFAULT_SCALE);
+      activatePage();
+      initFilterEventLoader(debounce(() => {
+        markerGroup.clearLayers();
+        initMarkers(data);
+      }));
+    }, showMessageGetError);
+    setTitleLayer();
+    address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
+  }).setView(location, zoom);
+};
 
 mainMarker.addTo(map);
 mainMarker.on('moveend', (evt) => {
@@ -116,3 +118,5 @@ mainMarker.on('moveend', (evt) => {
 resetButton.addEventListener('click', () => {
   resetPage();
 });
+
+initMap(DEFAULT_COORDS, DEFAULT_SCALE);
