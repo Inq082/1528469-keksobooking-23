@@ -85,26 +85,26 @@ const evtHandler = (evt) => {
   }, formData);
 };
 
-offerForm.addEventListener('submit', (evtHandler));
+offerForm.addEventListener('submit', evtHandler);
 
 const initMarkers = (offers) => {
   offers.filter(adFilter).slice(0, OFFERS_COUNT).forEach((item) => {
     addMarkers(item);
   });
 };
-const initMap = (location, zoom) => {
-  map.on('load', () => {
-    getData((data) => {
+const initMap = (mapHandler) => {
+  getData((data) => {
+    initMarkers(data);
+    activatePage();
+    initFilterEventLoader(debounce(() => {
+      markerGroup.clearLayers();
       initMarkers(data);
-      activatePage();
-      initFilterEventLoader(debounce(() => {
-        markerGroup.clearLayers();
-        initMarkers(data);
-      }));
-    }, showMessageGetError);
-    setTitleLayer();
-    address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
-  }).setView(location, zoom);
+    }));
+  }, showMessageGetError);
+  setTitleLayer();
+  address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
+  map.on('load', mapHandler).setView(DEFAULT_COORDS, DEFAULT_SCALE);
+
 };
 
 mainMarker.addTo(map);
