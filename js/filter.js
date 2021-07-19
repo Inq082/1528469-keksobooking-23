@@ -27,7 +27,7 @@ const filterOffers = ({offer}) => {
   return housingCondition && pricesCondition && roomsCondition && guestsCondition;
 };
 
-const initFilterEventLoader = (handler) => {
+const initiateFilterEventLoader = (handler) => {
   mapFilterForm.addEventListener('change', handler);
 };
-export {filterOffers, initFilterEventLoader};
+export {filterOffers, initiateFilterEventLoader};

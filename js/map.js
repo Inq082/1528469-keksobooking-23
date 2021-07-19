@@ -1,9 +1,9 @@
-import {offerForm, filtersForm, toggleState, avatarPreview, photoContainer} from './form.js';
+import {offerForm, filtersForm, changeState, avatarPreview, photoContainer} from './form.js';
 import {createCard} from './card.js';
 import {getData} from './api.js';
-import {initFilterEventLoader} from './filter.js';
+import {initiateFilterEventLoader} from './filter.js';
 import {filterOffers} from './filter.js';
-import {debounce} from './utils.js';
+import {eliminateDebounce} from './utils.js';
 
 const DEFAULT_COORDS = {
   lat: 35.68170,
@@ -82,18 +82,18 @@ const resetPage = () => {
   if (photoContainer.querySelector('img')) {photoContainer.querySelector('img').remove();}
 };
 
-const initMarkers = (offers) => {
+const initiateMarkers = (offers) => {
   offers.filter(filterOffers).slice(0, OFFERS_COUNT).forEach((item) => {
     addMarkers(item);
   });
 };
-const onMapLoad = () => {
+const beginMapLoad = () => {
   getData((data) => {
-    initMarkers(data);
-    toggleState(false);
-    initFilterEventLoader(debounce(() => {
+    initiateMarkers(data);
+    changeState(false);
+    initiateFilterEventLoader(eliminateDebounce(() => {
       markerGroup.clearLayers();
-      initMarkers(data);
+      initiateMarkers (data);
     }));
   }, showMessageGetError);
   setTitleLayer();
@@ -108,7 +108,7 @@ mainMarker.on('moveend', (evt) => {
   address.value = `${currentCoordinatesLat}, ${currentCoordinatesLng}`;
 });
 
-map.on('load', onMapLoad).setView(DEFAULT_COORDS, DEFAULT_SCALE);
+map.on('load', beginMapLoad).setView(DEFAULT_COORDS, DEFAULT_SCALE);
 resetButton.addEventListener('click', () => {
   resetPage();
 });
