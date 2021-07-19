@@ -105,9 +105,18 @@ const checkValidity = () => {
     validateRoomCapacity(selectRooms.value),
   );
 };
-const removeMessage = () => {
-  document.querySelectorAll('.success, .error').forEach((messageElement) => messageElement.remove());
+
+const onKeyDown = (evt) => {
+  if (evt.code === 'Escape') {
+    onRemoveMessage();
+  }
 };
+
+function onRemoveMessage () {
+  document.querySelectorAll('.success, .error').forEach((messageElement) => messageElement.remove());
+  document.removeEventListener('click', onRemoveMessage);
+  document.removeEventListener('keydown', onKeyDown);
+}
 
 const addImage = (file, block) => {
   const fileName = file.name.toLowerCase();
@@ -128,12 +137,18 @@ const createBlock = () => {
   photoContainer.appendChild(previewPhoto);
 };
 
+const showSuccessMessage = () => {
+  const successMessageElement = messageSuccessTemplate.cloneNode(true);
+  document.addEventListener('keydown', onKeyDown);
+  document.addEventListener('click', onRemoveMessage);
+  document.body.append(successMessageElement);
+};
+
 const onFormSubmit = (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
   sendData(() => {
-    const successMessageElement = messageSuccessTemplate.cloneNode(true);
-    document.body.append(successMessageElement);
+    showSuccessMessage();
     resetPage();
   },
   () => {
@@ -142,13 +157,6 @@ const onFormSubmit = (evt) => {
   }, formData);
 };
 
-document.addEventListener('keydown', (evt) => {
-  if (evt.code === 'Escape') {
-    removeMessage();
-  }
-});
-
-document.addEventListener('click', removeMessage);
 avatarChooser.addEventListener('change', () => {
   const file = avatarChooser.files[0];
   addImage(file, avatarPreview);
@@ -166,6 +174,7 @@ checkValidity();
 
 export {
   offerForm,
+  filtersForm,
   messageSuccessTemplate,
   messageErrorTemplate,
   toggleState,

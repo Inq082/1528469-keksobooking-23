@@ -1,7 +1,7 @@
 import {getRussianDeclension} from './utils.js';
 
-const OFFER_ROOM = ['комната', 'комнаты', 'комнат'];
-const OFFER_GUEST = ['гостя', 'гостей', 'гостей'];
+const OFFER_ROOMS = ['комната', 'комнаты', 'комнат'];
+const OFFER_GUESTS = ['гостя', 'гостей', 'гостей'];
 
 const OfferType = {
   flat: 'Квартира',
@@ -52,8 +52,8 @@ const createCard = (adsItem) => {
     .querySelector('.popup');
 
   const card = cardTemplate.cloneNode(true);
-  const rooms = getRussianDeclension(adsItem.offer.rooms, OFFER_ROOM);
-  const guests = getRussianDeclension(adsItem.offer.guests, OFFER_GUEST);
+  const rooms = getRussianDeclension(adsItem.offer.rooms, OFFER_ROOMS);
+  const guests = getRussianDeclension(adsItem.offer.guests, OFFER_GUESTS);
 
   setCardElementText(card, '.popup__title', adsItem.offer.title);
   setCardElementText(card, '.popup__text--address', adsItem.offer.address);
