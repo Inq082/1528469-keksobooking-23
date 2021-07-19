@@ -23,4 +23,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {debounce, isEscEvent, getRussianDeclension};
+export {debounce, getRussianDeclension};

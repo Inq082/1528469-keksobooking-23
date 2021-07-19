@@ -1,4 +1,4 @@
-import {offerForm, toggleState} from './form.js';
+import {offerForm, toggleState, avatarPreview, photoContainer} from './form.js';
 import {createCard} from './card.js';
 import {getData} from './api.js';
 import {initFilterEventLoader} from './filter.js';
@@ -77,6 +77,8 @@ const resetPage = () => {
   mainMarker.setLatLng(DEFAULT_COORDS);
   address.readOnly = true;
   address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
+  avatarPreview.querySelector('img').src = 'img/muffin-grey.svg';
+  if (photoContainer.querySelector('img')) {photoContainer.querySelector('img').remove();}
 };
 
 const initMarkers = (offers) => {

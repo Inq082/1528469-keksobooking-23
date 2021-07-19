@@ -20,9 +20,9 @@ const timeOut = offerTime.querySelector('#timeout');
 const filtersForm = document.querySelector('.map__filters');
 const messageSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
 const messageErrorTemplate = document.querySelector('#error').content.querySelector('.error');
-const avatarChooser = document.querySelector('.ad-form__field');
-const avatarPreview = document.querySelector('.ad-form-header__preview img');
-const photoChooser = document.querySelector('.ad-form__upload');
+const avatarChooser = document.querySelector('.ad-form__field input[type=file]');
+const avatarPreview = document.querySelector('.ad-form-header__preview');
+const photoChooser = document.querySelector('.ad-form__upload input[type=file]');
 const photoContainer = document.querySelector('.ad-form__photo');
 const filterFormsElements = Array.from(filtersForm.children).concat(Array.from(offerForm.children));
 
@@ -35,7 +35,9 @@ const DefaultMinPrice = {
 };
 
 const toggleState = () => {
-  filtersForm.classList.toggle('map__filters--disabled');
+  const value = false;
+  filtersForm.classList.toggle('map__filters--disabled', value);
+  offerForm.classList.toggle('ad-form--disabled');
   filterFormsElements.forEach((item) => item.disabled = !item.disabled);
 };
 
@@ -108,36 +110,25 @@ const removeMessage = () => {
   document.querySelectorAll('.success, .error').forEach((messageElement) => messageElement.remove());
 };
 
-const onFormAvatarLoad = (evt) => {
-  const file = evt.target.files[0];
+const addImage = (file, block) => {
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (matches) {
     const reader = new FileReader();
     reader.addEventListener('load', () => {
-      avatarPreview.src = reader.result;
+      block.querySelector('img').src = reader.result;
     });
     reader.readAsDataURL(file);
   }
+};
+const createBlock = () => {
+  photoContainer.innerHTML = '';
+  const previewPhoto = document.createElement('img');
+  previewPhoto.width = PHOTO_SIZE;
+  previewPhoto.height = PHOTO_SIZE;
+  photoContainer.appendChild(previewPhoto);
 };
 
-const onFormPhotoLoad = (evt) => {
-  const file = evt.target.files[0];
-  const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-  if (matches) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      photoContainer.innerHTML = '';
-      const previewPhoto = document.createElement('img');
-      previewPhoto.width = PHOTO_SIZE;
-      previewPhoto.height = PHOTO_SIZE;
-      photoContainer.appendChild(previewPhoto);
-      previewPhoto.src = reader.result;
-    });
-    reader.readAsDataURL(file);
-  }
-};
 const onFormSubmit = (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
@@ -159,8 +150,16 @@ document.addEventListener('keydown', (evt) => {
 });
 
 document.addEventListener('click', removeMessage);
-avatarChooser.addEventListener('change', onFormAvatarLoad);
-photoChooser.addEventListener('change', onFormPhotoLoad);
+avatarChooser.addEventListener('change', () => {
+  const file = avatarChooser.files[0];
+  addImage(file, avatarPreview);
+});
+
+photoChooser.addEventListener('change', () => {
+  const file = photoChooser.files[0];
+  if (!photoContainer.querySelector('img')) {createBlock();}
+  addImage(file, photoContainer);
+});
 offerForm.addEventListener('submit', onFormSubmit);
 
 toggleState();
@@ -171,5 +170,7 @@ export {
   messageSuccessTemplate,
   messageErrorTemplate,
   toggleState,
-  checkValidity
+  checkValidity,
+  avatarPreview,
+  photoContainer
 };
