@@ -1,4 +1,3 @@
-//Получает данные
 const getData = (onSuccess, onFail) => {
   fetch('https://23.javascript.pages.academy/keksobooking/data')
     .then((response) => {
@@ -12,7 +11,6 @@ const getData = (onSuccess, onFail) => {
     .catch(onFail);
 };
 
-//Отправляет данные
 const sendData = (onSuccess, onFail, data) => {
   fetch('https://23.javascript.pages.academy/keksobooking', {
     method: 'POST',

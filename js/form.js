@@ -1,7 +1,12 @@
+import {sendData} from './api.js';
+import {resetPage} from './map.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const DEFAULT_MAX_PRICE = 1000000;
 const MAX_CAPACITY = '100';
+const FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif'];
+const PHOTO_SIZE = 70;
 
 const offerForm = document.querySelector('.ad-form');
 const offerTitleInput = offerForm.querySelector('#title');
@@ -13,11 +18,13 @@ const offerTime = offerForm.querySelector('.ad-form__element--time');
 const timeIn = offerTime.querySelector('#timein');
 const timeOut = offerTime.querySelector('#timeout');
 const filtersForm = document.querySelector('.map__filters');
-const address = document.querySelector('#address');
-const filterFormsElements = Array.from(filtersForm.children).concat(Array.from(offerForm.children));
-const resetButton = document.querySelector('.ad-form__reset');
 const messageSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
 const messageErrorTemplate = document.querySelector('#error').content.querySelector('.error');
+const avatarChooser = document.querySelector('.ad-form__field input[type=file]');
+const avatarPreview = document.querySelector('.ad-form-header__preview');
+const photoChooser = document.querySelector('.ad-form__upload input[type=file]');
+const photoContainer = document.querySelector('.ad-form__photo');
+const filterFormsElements = Array.from(filtersForm.children).concat(Array.from(offerForm.children));
 
 const DefaultMinPrice = {
   bungalow: 0,
@@ -27,25 +34,12 @@ const DefaultMinPrice = {
   palace: 10000,
 };
 
-//Деактивация формы
-const deactivatePage = () => {
-  filtersForm.classList.add('map__filters--disabled');
-  offerForm.classList.add('ad-form--disabled');
-  filterFormsElements.forEach((item) => {
-    item.disabled = true;
-  });
+const toggleState = (isDisabled) => {
+  filtersForm.classList.toggle('map__filters--disabled', isDisabled);
+  offerForm.classList.toggle('ad-form--disabled', isDisabled);
+  filterFormsElements.forEach((item) => item.disabled = isDisabled);
 };
 
-//Активация формы
-const activatePage = () => {
-  filtersForm.classList.remove('map__filters--disabled');
-  offerForm.classList.remove('ad-form--disabled');
-  filterFormsElements.forEach((item) => {
-    item.disabled = false;
-  });
-};
-
-//Валидация заголовка
 const checkTitleValidity = () => {
   const valueLength = offerTitleInput.value.length;
 
@@ -59,7 +53,6 @@ const checkTitleValidity = () => {
   offerTitleInput.reportValidity();
 };
 
-// Валидация количества гостей и комнат
 const validateRoomCapacity = (value) => {
   if (value === MAX_CAPACITY && capacitySelect.value !== '0') {
     capacitySelect.setCustomValidity('100 комнат может быть только "не для гостей"');
@@ -73,7 +66,6 @@ const validateRoomCapacity = (value) => {
   capacitySelect.reportValidity();
 };
 
-// Валидация цены
 const checkPriceValidity = () => {
   if (offerPrice.value > DEFAULT_MAX_PRICE) {
     offerPrice.setCustomValidity(`Цена не должна превышать ${DEFAULT_MAX_PRICE} руб.`);
@@ -88,7 +80,6 @@ const checkPriceValidity = () => {
   offerPrice.reportValidity();
 };
 
-// Синхронизация полей времени заезда и выезда
 const checkTimeValidity = (firstTime, secondTime) => {
   secondTime.value = firstTime.value;
 };
@@ -117,6 +108,40 @@ const checkValidity = () => {
 const removeMessage = () => {
   document.querySelectorAll('.success, .error').forEach((messageElement) => messageElement.remove());
 };
+
+const addImage = (file, block) => {
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      block.querySelector('img').src = reader.result;
+    });
+    reader.readAsDataURL(file);
+  }
+};
+const createBlock = () => {
+  photoContainer.innerHTML = '';
+  const previewPhoto = document.createElement('img');
+  previewPhoto.width = PHOTO_SIZE;
+  previewPhoto.height = PHOTO_SIZE;
+  photoContainer.appendChild(previewPhoto);
+};
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  const formData = new FormData(evt.target);
+  sendData(() => {
+    const successMessageElement = messageSuccessTemplate.cloneNode(true);
+    document.body.append(successMessageElement);
+    resetPage();
+  },
+  () => {
+    const errorMessageElement = messageErrorTemplate.cloneNode(true);
+    document.body.append(errorMessageElement);
+  }, formData);
+};
+
 document.addEventListener('keydown', (evt) => {
   if (evt.code === 'Escape') {
     removeMessage();
@@ -124,16 +149,27 @@ document.addEventListener('keydown', (evt) => {
 });
 
 document.addEventListener('click', removeMessage);
+avatarChooser.addEventListener('change', () => {
+  const file = avatarChooser.files[0];
+  addImage(file, avatarPreview);
+});
 
-deactivatePage();
+photoChooser.addEventListener('change', () => {
+  const file = photoChooser.files[0];
+  if (!photoContainer.querySelector('img')) {createBlock();}
+  addImage(file, photoContainer);
+});
+offerForm.addEventListener('submit', onFormSubmit);
+
+toggleState(true);
 checkValidity();
 
 export {
   offerForm,
-  address,
-  resetButton,
   messageSuccessTemplate,
   messageErrorTemplate,
-  activatePage,
-  checkValidity
+  toggleState,
+  checkValidity,
+  avatarPreview,
+  photoContainer
 };
