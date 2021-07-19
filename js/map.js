@@ -1,4 +1,4 @@
-import {offerForm, toggleState, avatarPreview, photoContainer} from './form.js';
+import {offerForm, filtersForm, toggleState, avatarPreview, photoContainer} from './form.js';
 import {createCard} from './card.js';
 import {getData} from './api.js';
 import {initFilterEventLoader} from './filter.js';
@@ -74,6 +74,7 @@ const showMessageGetError = () => {
 };
 const resetPage = () => {
   offerForm.reset();
+  filtersForm.reset();
   mainMarker.setLatLng(DEFAULT_COORDS);
   address.readOnly = true;
   address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
