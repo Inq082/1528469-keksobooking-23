@@ -34,11 +34,10 @@ const DefaultMinPrice = {
   palace: 10000,
 };
 
-const toggleState = () => {
-  const value = false;
-  filtersForm.classList.toggle('map__filters--disabled', value);
-  offerForm.classList.toggle('ad-form--disabled');
-  filterFormsElements.forEach((item) => item.disabled = !item.disabled);
+const toggleState = (isDisabled) => {
+  filtersForm.classList.toggle('map__filters--disabled', isDisabled);
+  offerForm.classList.toggle('ad-form--disabled', isDisabled);
+  filterFormsElements.forEach((item) => item.disabled = isDisabled);
 };
 
 const checkTitleValidity = () => {
@@ -162,7 +161,7 @@ photoChooser.addEventListener('change', () => {
 });
 offerForm.addEventListener('submit', onFormSubmit);
 
-toggleState();
+toggleState(true);
 checkValidity();
 
 export {

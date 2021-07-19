@@ -89,7 +89,7 @@ const initMarkers = (offers) => {
 const onMapLoad = () => {
   getData((data) => {
     initMarkers(data);
-    toggleState();
+    toggleState(false);
     initFilterEventLoader(debounce(() => {
       markerGroup.clearLayers();
       initMarkers(data);
