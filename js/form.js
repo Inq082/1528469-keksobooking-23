@@ -18,16 +18,13 @@ const offerTime = offerForm.querySelector('.ad-form__element--time');
 const timeIn = offerTime.querySelector('#timein');
 const timeOut = offerTime.querySelector('#timeout');
 const filtersForm = document.querySelector('.map__filters');
-const address = document.querySelector('#address');
-const resetButton = document.querySelector('.ad-form__reset');
 const messageSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
 const messageErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 const avatarChooser = document.querySelector('.ad-form__field');
 const avatarPreview = document.querySelector('.ad-form-header__preview img');
 const photoChooser = document.querySelector('.ad-form__upload');
 const photoContainer = document.querySelector('.ad-form__photo');
-const fieldsets = offerForm.querySelectorAll('fieldset');
-const selects = filtersForm.querySelectorAll('select');
+const filterFormsElements = Array.from(filtersForm.children).concat(Array.from(offerForm.children));
 
 const DefaultMinPrice = {
   bungalow: 0,
@@ -37,21 +34,9 @@ const DefaultMinPrice = {
   palace: 10000,
 };
 
-const toggleState = (item) => {
-  offerForm.classList.toggle('ad-form--disabled');
-  for (const fieldset of fieldsets) {
-    fieldset.disabled = item;
-  }
+const toggleState = () => {
   filtersForm.classList.toggle('map__filters--disabled');
-  for (const select of selects) {
-    select.disabled = item;
-  }
-};
-const setInactive = () => {
-  toggleState(false);
-};
-const setActive = () => {
-  toggleState(true);
+  filterFormsElements.forEach((item) => item.disabled = !item.disabled);
 };
 
 const checkTitleValidity = () => {
@@ -178,16 +163,13 @@ avatarChooser.addEventListener('change', onFormAvatarLoad);
 photoChooser.addEventListener('change', onFormPhotoLoad);
 offerForm.addEventListener('submit', onFormSubmit);
 
-setInactive();
+toggleState();
 checkValidity();
 
 export {
   offerForm,
-  address,
-  resetButton,
   messageSuccessTemplate,
   messageErrorTemplate,
-  setActive,
-  setInactive,
+  toggleState,
   checkValidity
 };

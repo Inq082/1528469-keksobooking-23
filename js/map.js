@@ -1,4 +1,4 @@
-import {address, offerForm, resetButton,setActive} from './form.js';
+import {offerForm, toggleState} from './form.js';
 import {createCard} from './card.js';
 import {getData} from './api.js';
 import {initFilterEventLoader} from './filter.js';
@@ -21,7 +21,8 @@ const mainPinIcon = L.icon({
 
 const map = L.map('map-canvas');
 const markerGroup = L.layerGroup().addTo(map);
-
+const address = document.querySelector('#address');
+const resetButton = document.querySelector('.ad-form__reset');
 const mainMarker = L.marker(
   DEFAULT_COORDS,
   {
@@ -86,9 +87,9 @@ const initMarkers = (offers) => {
 const onMapLoad = () => {
   getData((data) => {
     initMarkers(data);
+    toggleState();
     initFilterEventLoader(debounce(() => {
       markerGroup.clearLayers();
-      setActive();
       initMarkers(data);
     }));
   }, showMessageGetError);
@@ -103,7 +104,6 @@ mainMarker.on('moveend', (evt) => {
   const currentCoordinatesLng = currentCoordinates.lng.toFixed(5);
   address.value = `${currentCoordinatesLat}, ${currentCoordinatesLng}`;
 });
-
 
 map.on('load', onMapLoad).setView(DEFAULT_COORDS, DEFAULT_SCALE);
 resetButton.addEventListener('click', () => {

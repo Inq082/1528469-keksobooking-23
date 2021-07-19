@@ -3,7 +3,7 @@ import {getRussianDeclension} from './utils.js';
 const OFFER_ROOM = ['комната', 'комнаты', 'комнат'];
 const OFFER_GUEST = ['гостя', 'гостей', 'гостей'];
 
-const offerType = {
+const OfferType = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом',
@@ -58,7 +58,7 @@ const createCard = (adsItem) => {
   setCardElementText(card, '.popup__title', adsItem.offer.title);
   setCardElementText(card, '.popup__text--address', adsItem.offer.address);
   setCardElementText(card, '.popup__text--price', `${adsItem.offer.price} ₽/ночь`);
-  setCardElementText(card, '.popup__type', offerType[adsItem.offer.type]);
+  setCardElementText(card, '.popup__type', OfferType[adsItem.offer.type]);
   setCardElementText(card, '.popup__text--capacity', `${adsItem.offer.rooms} ${rooms} для ${adsItem.offer.guests} ${guests}`);
   setCardElementText(card, '.popup__text--time', `Заезд после ${adsItem.offer.checkin} , выезд до ${adsItem.offer.checkout}`);
   setCardElementText(card, '.popup__description', adsItem.offer.description);

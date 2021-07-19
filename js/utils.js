@@ -23,5 +23,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 export {debounce, isEscEvent, getRussianDeclension};
