@@ -13,7 +13,7 @@ const getRussianDeclension = function (count, variants) {
   }
   return variants[2];
 };
-const debounce = (callback, timeoutDelay = 500) => {
+const eliminateDebounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
 
   return (...rest) => {
@@ -22,4 +22,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {debounce, getRussianDeclension};
+export {eliminateDebounce, getRussianDeclension};

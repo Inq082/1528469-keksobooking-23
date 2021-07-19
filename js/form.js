@@ -34,10 +34,12 @@ const DefaultMinPrice = {
   palace: 10000,
 };
 
-const toggleState = (isDisabled) => {
+const changeState = (isDisabled) => {
   filtersForm.classList.toggle('map__filters--disabled', isDisabled);
   offerForm.classList.toggle('ad-form--disabled', isDisabled);
-  filterFormsElements.forEach((item) => item.disabled = isDisabled);
+  filterFormsElements.forEach((item) => {
+    item.disabled = isDisabled;
+  });
 };
 
 const checkTitleValidity = () => {
@@ -144,7 +146,7 @@ const showSuccessMessage = () => {
   document.body.append(successMessageElement);
 };
 
-const onFormSubmit = (evt) => {
+const submitForm = (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
   sendData(() => {
@@ -167,9 +169,9 @@ photoChooser.addEventListener('change', () => {
   if (!photoContainer.querySelector('img')) {createBlock();}
   addImage(file, photoContainer);
 });
-offerForm.addEventListener('submit', onFormSubmit);
+offerForm.addEventListener('submit', submitForm);
 
-toggleState(true);
+changeState(true);
 checkValidity();
 
 export {
@@ -177,7 +179,7 @@ export {
   filtersForm,
   messageSuccessTemplate,
   messageErrorTemplate,
-  toggleState,
+  changeState,
   checkValidity,
   avatarPreview,
   photoContainer
