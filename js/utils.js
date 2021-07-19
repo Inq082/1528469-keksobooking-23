@@ -11,7 +11,6 @@ const getRussianDeclension = function (count, variants) {
   if (limitOfTen === 1) {
     return variants[0];
   }
-
   return variants[2];
 };
 const debounce = (callback, timeoutDelay = 500) => {
