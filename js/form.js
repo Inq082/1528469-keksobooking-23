@@ -116,6 +116,8 @@ const onKeyDown = (evt) => {
 
 function onRemoveMessage () {
   document.querySelectorAll('.success, .error').forEach((messageElement) => messageElement.remove());
+  document.removeEventListener('keydown', onKeyDown);
+  document.removeEventListener('click', onRemoveMessage);
 }
 
 const addImage = (file, block) => {
@@ -180,8 +182,6 @@ checkValidity();
 export {
   offerForm,
   filtersForm,
-  messageSuccessTemplate,
-  messageErrorTemplate,
   changeState,
   checkValidity,
   avatarPreview,
