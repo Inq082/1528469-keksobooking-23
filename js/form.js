@@ -116,8 +116,6 @@ const onKeyDown = (evt) => {
 
 function onRemoveMessage () {
   document.querySelectorAll('.success, .error').forEach((messageElement) => messageElement.remove());
-  document.removeEventListener('click', onRemoveMessage);
-  document.removeEventListener('keydown', onKeyDown);
 }
 
 const addImage = (file, block) => {
