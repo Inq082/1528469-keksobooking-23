@@ -5,7 +5,7 @@ const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const DEFAULT_MAX_PRICE = 1000000;
 const MAX_CAPACITY = '100';
-const FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif'];
+const TYPES = ['jpg', 'jpeg', 'png', 'gif'];
 const PHOTO_SIZE = 70;
 
 const offerForm = document.querySelector('.ad-form');
@@ -122,7 +122,7 @@ function onRemoveMessage () {
 
 const addImage = (file, block) => {
   const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  const matches = TYPES.some((it) => fileName.endsWith(it));
   if (matches) {
     const reader = new FileReader();
     reader.addEventListener('load', () => {
@@ -145,6 +145,12 @@ const showSuccessMessage = () => {
   document.addEventListener('click', onRemoveMessage);
   document.body.append(successMessageElement);
 };
+const showErrorMessage = () => {
+  const errorMessageElement = messageErrorTemplate.cloneNode(true);
+  document.addEventListener('keydown', onKeyDown);
+  document.addEventListener('click', onRemoveMessage);
+  document.body.append(errorMessageElement);
+};
 
 const submitForm = (evt) => {
   evt.preventDefault();
@@ -154,8 +160,7 @@ const submitForm = (evt) => {
     resetPage();
   },
   () => {
-    const errorMessageElement = messageErrorTemplate.cloneNode(true);
-    document.body.append(errorMessageElement);
+    showErrorMessage();
   }, formData);
 };
 
