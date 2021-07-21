@@ -99,7 +99,6 @@ const beginMapLoad = () => {
   }, showMessageGetError);
   setTitleLayer();
   address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
-
 };
 mainMarker.addTo(map);
 mainMarker.on('moveend', (evt) => {
