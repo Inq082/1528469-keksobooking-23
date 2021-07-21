@@ -73,10 +73,11 @@ const showMessageGetError = () => {
   }, MESSAGE_SHOW_TIME);
 };
 const resetPage = () => {
-  offerForm.reset();
   filtersForm.reset();
+  filtersForm.dispatchEvent(new Event('change'));
+  offerForm.reset();
   mainMarker.setLatLng(DEFAULT_COORDS);
-  address.readOnly = true;
+  //address.readOnly = true;
   address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
   avatarPreview.querySelector('img').src = 'img/muffin-grey.svg';
   if (photoContainer.querySelector('img')) {photoContainer.querySelector('img').remove();}
@@ -109,7 +110,5 @@ mainMarker.on('moveend', (evt) => {
 });
 
 map.on('load', beginMapLoad).setView(DEFAULT_COORDS, DEFAULT_SCALE);
-resetButton.addEventListener('click', () => {
-  resetPage();
-});
+resetButton.addEventListener('click', resetPage);
 export {addMarkers, resetPage};
