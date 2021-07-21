@@ -77,7 +77,7 @@ const resetPage = () => {
   filtersForm.dispatchEvent(new Event('change'));
   offerForm.reset();
   mainMarker.setLatLng(DEFAULT_COORDS);
-  //address.readOnly = true;
+  address.readOnly = true;
   address.value = `${DEFAULT_COORDS.lat}, ${DEFAULT_COORDS.lng}`;
   avatarPreview.querySelector('img').src = 'img/muffin-grey.svg';
   if (photoContainer.querySelector('img')) {photoContainer.querySelector('img').remove();}
