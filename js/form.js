@@ -182,8 +182,6 @@ checkValidity();
 export {
   offerForm,
   filtersForm,
-  messageSuccessTemplate,
-  messageErrorTemplate,
   changeState,
   checkValidity,
   avatarPreview,
